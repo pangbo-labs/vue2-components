@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="icon" href="<%= BASE_URL %>favicon.ico">
+	<title>
+		<%= htmlWebpackPlugin.options.title %>
+	</title>
+	<style>
+		
+		:root {
+			--font-family: Segoe UI, Rototo, Avenir, Helvetica, Arial, Noto Sans SC, Microsoft Yahei, sans-serif;
+			--text-size: 13px;
+			--line-height: 175%;
+			--line-height-compact: 140%;
+			--text-color: #37352f;
+			--small-text-size: 12px;
+
+			--selected-background: #ccc;
+			--selected-text-color: var(--text-color);
+			--selected-text-weight: normal;
+			--hovered-background: #ecf5ff;
+			--hovered-text-color: var(--text-color); /* #66b1ff; */
+			--hovered-text-weight: normal;
+
+			--popup-menu-background: #fff;
+			--popup-menu-padding: 4px 4px;
+			--popup-menu-item-padding: 8px 20px;
+			--popup-menu-item-line-height: 100%;
+			--popup-menu-item-background: transparent;
+			--popup-menu-item-text-color: var(--text-color);
+			--popup-menu-item-text-size: var(--text-size);
+			--popup-menu-default-item-text-color: var(--popup-menu-item-text-color);
+			--popup-menu-default-item-text-weight: bold;
+
+			--list-view-header-font-size: var(--text-size);
+			--list-view-header-font-weight: 500;
+			--list-view-data-font-size: var(--text-size);
+		}
+
+		body {
+			margin: 0 0 0 0;
+		}
+
+	</style>
+</head>
+
+<body>
+	<noscript>
+		<strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+				Please enable it to continue.</strong>
+	</noscript>
+	<div id="app"></div>
+	<!-- built files will be auto injected -->
+</body>
+
+</html>
