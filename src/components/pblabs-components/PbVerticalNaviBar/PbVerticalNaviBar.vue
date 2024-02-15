@@ -62,7 +62,7 @@ export default {
 }
 
 .navi-item:hover {
-	background: #fa3;
+	background: var(--primary-color);
 	color: #fff;
 	transition: all .3s;
 }

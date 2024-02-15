@@ -81,13 +81,13 @@ export default {
 }
 
 .tab-button-current {
-	color: #c33;
+	color: var(--primary-color);
 }
 
 .current-indicator {
 	width: 0px;
 	height: 3px;
-	background: #c33;
+	background: var(--primary-color);
 	position: relative;
 	transition: all .2s;
 }
