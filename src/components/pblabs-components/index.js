@@ -7,6 +7,7 @@ import PbTooltip from './PbTooltip/PbTooltip.vue'
 import PbTooltipAnchor from './PbTooltip/PbTooltipAnchor.vue'
 import PbButton from './PbButton/PbButton.vue'
 import PbDialogBox from './PbDialogBox/PbDialogBox.vue'
+import PbMessageBox from './PbMessageBox/PbMessageBox.vue'
 import PbTable from './PbTable/PbTable.vue'
 import PbPath from './PbPath/PbPath.vue'
 import PbTabBar from './PbTabBar/PbTabBar.vue'
@@ -20,6 +21,7 @@ const components = [
 	PbTooltipAnchor,
 	PbButton,
 	PbDialogBox,
+	PbMessageBox,
 	PbTable,
 	PbPath,
 	PbTabBar,

@@ -1,9 +1,9 @@
 <template>
 	<div class="modal-mask" v-if="showDialog" @keydown.esc="onEscKeyDown">
         <div class="dialog-box-wrapper" ref="dialogBoxFrame">
-            <div class="dialog-box-body" :style="{ width: width + 'px' }">
+            <div class="dialog-box-body" :style="{ width: (width > 0) ? width : (dialogBoxConfig.width > 0 ? dialogBoxConfig.width : DEFAULT_WIDTH) + 'px' }">
                 <div class="title-bar" @mousedown="onTitleBarMouseDown">
-                    <div style="flex: auto;" class="title-text">{{ title }}</div>
+                    <div style="flex: auto;" class="title-text">{{ title ? title : dialogBoxConfig.title }}</div>
                     <div style="display: table;">
                         <div style="display: table-cell; vertical-align: middle;" class="control-button" @click="cancelDialog()">✕</div>
                     </div>
@@ -18,8 +18,10 @@
                         <pb-button style="margin-right: 6px;">Help</pb-button>
                     </div>
                     <div>
-                        <pb-button style="margin-left: 6px;" :is-default="true" @click="onOkClicked">OK</pb-button>
-                        <pb-button style="margin-left: 6px;" @click="cancelDialog">Cancel</pb-button>
+                        <pb-button v-for="(item, itemIndex) in dialogBoxConfig.buttons" :key="itemIndex"
+							style="margin-left: 6px;" :is-default="item.isDefault" @click="onButtonClicked( item )">
+							{{ item.text }}
+						</pb-button>
                     </div>
                 </div>
             </div>
@@ -33,21 +35,47 @@ export default {
     name: "PbDialogBox",
 
     props: {
-        showDialog: { type: Boolean, default: false },
-        title:      { type: String, default: "" },
-        width:      { type: Number, default: 500 },
-        height:     { type: Number, default: 0 },
+        dialogBoxConfig:    { type: Object, default: null },
+        showDialog:         { type: Boolean, default: false },
+        title:				{ type: String, default: null },
+        width:				{ type: Number, default: 0 },
+        height:				{ type: Number, default: 0 },
     },
     
     data: function() {
         return {
+
+			DEFAULT_WIDTH: 600,
+
             isMoving: false,
             mouseX: 0,
-            mouseY: 0
+            mouseY: 0,
+
+            defaultDialogBoxConfig: {
+                title: "",
+                width: 600,
+                height: 0,
+                buttons: [
+                    { text: "OK", isDefault: true, isOkButton: true },
+                    { text: "Cancel", isCancelButton: true },
+                ],
+                leftButtons: [
+                    { text: "Help", isHelpButton: true },
+                ],
+            }
         }
     },
     
     methods: {
+
+        onButtonClicked: function( buttonConfig )
+		{
+			if (buttonConfig.isOkButton) {
+				this.onOkClicked();
+			} else if (buttonConfig.isCancelButton) {
+				this.cancelDialog();
+			}
+		},
 
         endDialog: function( isCancelled ) {
             this.$emit( "update:showDialog", false );
