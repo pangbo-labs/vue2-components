@@ -1,12 +1,12 @@
 <template>
     <div class="pb-table">
-        <div class="pb-table-header-row">
+        <div ref="tableHead" class="pb-table-header-row">
             <div class="pb-table-header-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
                 :style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align }">
                 <slot :name="'column_header_' + column.id" :col="column">{{ column.text }}</slot>
             </div>
         </div>
-        <div class="pb-table-body">
+        <div ref="tableBody" class="pb-table-body">
 			<div v-if="showMessage" class="pb-table-message" v-html="message"></div>
 			<div v-else>
 				<div v-for="(row, rowIndex) in tableConfig.data" :key="rowIndex" class="pb-table-data-row"
@@ -40,6 +40,10 @@ export default {
 			isLoadingData: false,
 			showMessage: false,
 			message: "",
+			topRowIndex: 0,
+			topRowYOffset: 0,
+			renderedRows: 0,
+			renderedHeight: 0,
         }
     },
     methods: {
@@ -97,7 +101,22 @@ export default {
 				this.showMessage = true;
 				this.message = "<span style=\"color: #c33; text-align: center;\">Error loading data.<br>Error message: " + errorMessage + "</span>";
 			}
-		}
+
+			// after next update data to dom
+			this.$nextTick( () => {
+				this.$refs.tableHead.style.paddingRight = this.getVirticalScrollBarWidth( this.$refs.tableBody ) + "px";
+			} );
+		},
+
+		hasVirticalScrollBar: function( element )
+		{
+			return element && (element.scrollHeight > element.clientHeight) && (this.getVirticalScrollBarWidth( element ) > 0);
+		},
+
+		getVirticalScrollBarWidth: function( element )
+		{
+			return element ? element.offsetWidth - element.clientWidth : 0;
+		},
     }
 }
 </script>
