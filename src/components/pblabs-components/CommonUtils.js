@@ -27,4 +27,14 @@ export default {
         return { x: x, y: y };
     },
 
+    hasVirticalScrollBar: function( element )
+    {
+        return element && (element.scrollHeight > element.clientHeight) && (this.getVirticalScrollBarWidth( element ) > 0);
+    },
+
+    getVirticalScrollBarWidth: function( element )
+    {
+        return element ? element.offsetWidth - element.clientWidth : 0;
+    },
+
 }

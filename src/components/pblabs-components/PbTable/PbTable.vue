@@ -104,18 +104,8 @@ export default {
 
 			// after next update data to dom
 			this.$nextTick( () => {
-				this.$refs.tableHead.style.paddingRight = this.getVirticalScrollBarWidth( this.$refs.tableBody ) + "px";
+				this.$refs.tableHead.style.paddingRight = this.$commonUtils.getVirticalScrollBarWidth( this.$refs.tableBody ) + "px";
 			} );
-		},
-
-		hasVirticalScrollBar: function( element )
-		{
-			return element && (element.scrollHeight > element.clientHeight) && (this.getVirticalScrollBarWidth( element ) > 0);
-		},
-
-		getVirticalScrollBarWidth: function( element )
-		{
-			return element ? element.offsetWidth - element.clientWidth : 0;
 		},
     }
 }
