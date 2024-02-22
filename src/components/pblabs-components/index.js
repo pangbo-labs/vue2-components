@@ -13,6 +13,7 @@ import PbPath from './PbPath/PbPath.vue'
 import PbTabBar from './PbTabBar/PbTabBar.vue'
 import PbForm from './PbForm/PbForm.vue'
 import PbTimePicker from './PbTimePicker/PbTimePicker.vue'
+import PbHGrids from './PbHGrids/PbHGrids.vue'
 
 const components = [
 	PbVerticalNaviBar,
@@ -27,6 +28,7 @@ const components = [
 	PbTabBar,
 	PbForm,
 	PbTimePicker,
+	PbHGrids,
 ];
 
 export default

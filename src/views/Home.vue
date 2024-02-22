@@ -1,7 +1,14 @@
 <template>
 	<div style="padding: 30px 30px;" @contextmenu="onRightClicked">
-		<div style="margin-bottom: 20px;">Home</div>
-		<pb-button @click="showAboutDialogBox">About</pb-button>
+		
+		<pb-h-grids :config="hGridsConfig">
+			<template v-slot:grid_0>
+				<div style="font-size: 24px;">Home</div>
+			</template>
+			<template v-slot:grid_1>
+				<pb-button @click="showAboutDialogBox">About</pb-button>
+			</template>
+		</pb-h-grids>
 
 		<pb-tab-bar :tabs="tabs" style="width: 100%; margin-top: 20px;" @active-tab-changed="onActiveTabChanged" />
 
@@ -24,6 +31,15 @@ export default {
 	data: function()
 	{
 		return {
+
+			hGridsConfig: {
+				grids: [
+					{ size: -1,	align: "Left" },
+					{ size: 10,	align: "Right" },
+				],
+				gridSpacing: 20,
+				showBorder: false,
+			},
 
 			tabs: [
 				{ id: "systemInfo",			text: "System Info" },
