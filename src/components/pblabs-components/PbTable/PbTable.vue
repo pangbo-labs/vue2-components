@@ -6,10 +6,10 @@
                 <slot :name="'column_header_' + column.id" :col="column">{{ column.text }}</slot>
             </div>
         </div>
-        <div ref="tableBody" class="pb-table-body">
+        <div ref="tableBody" class="pb-table-body" @scroll="onScroll">
 			<div v-if="showMessage" class="pb-table-message" v-html="message"></div>
 			<div v-else>
-				<div v-for="(row, rowIndex) in tableConfig.data" :key="rowIndex" class="pb-table-data-row"
+				<div v-for="(row, rowIndex) in tableConfig.data" :key="rowIndex" class="pb-table-data-row" :ref="makeRowRef( rowIndex )"
 					:class="{ 'pb-table-data-row-selected': selectedRows.includes( row ) }"
 					@mousedown="onRowMouseDown( row )"
 					@click="$emit( 'row-clicked', row )"
@@ -21,6 +21,7 @@
 						<slot :name="'column_data_' + column.id" :row="row" :col="column">{{ row[column.id] }}</slot>
 					</div>
 				</div>
+				<div v-if="isLoadingData" class="pb-table-message">Loading...</div>
 			</div>
         </div>
 
@@ -31,22 +32,74 @@
 <script>
 export default {
     name: "PbTable",
-    props: {
+    props:
+	{
         tableConfig: { type: Object, default: {} },
     },
-    data: function() {
+    data: function()
+	{
         return {
             selectedRows: [],
 			isLoadingData: false,
 			showMessage: false,
 			message: "",
+			loadingDataContext: null,
+			totalRows: -1,
+			loadedRows: 0,
 			topRowIndex: 0,
 			topRowYOffset: 0,
 			renderedRows: 0,
 			renderedHeight: 0,
+			rowsLoadedEachTime: 20,
+			tableBody: this.$refs.tableBody,
         }
     },
-    methods: {
+	computed:
+	{
+		scrollHeight: function()
+		{
+			console.log( `scrollHeight: function()` );
+			console.log( `this.$refs.tableBody: ${this.$refs.tableBody}` );
+			return this.$refs.tableBody ? this.$refs.tableBody.scrollHeight : 0;
+		}
+	},
+	watch:
+	{
+		scrollHeight:
+		{
+			handler( newValue, oldValue )
+			{
+				console.log( `scrollHeight changed: ${newValue}` );
+				// this.checkVirticalScrollBar();
+			},
+			deep: true,
+			immediate: false,
+		},
+		
+		"tableBody.scrollHeight":
+		{
+			handler( newValue, oldValue )
+			{
+				console.log( `tableBody.scrollHeight changed: ${newValue}` );
+				// this.checkVirticalScrollBar();
+			},
+			deep: true,
+			immediate: true,
+		},
+
+		"tableBody.offsetHeight":
+		{
+			handler( newValue, oldValue )
+			{
+				console.log( `tableBody.offsetHeight changed: ${newValue}` );
+				// this.checkVirticalScrollBar();
+			},
+			deep: true,
+			immediate: true,
+		},
+	},
+	methods:
+	{
         onRowMouseDown: function( rowData )
         {
             console.log( rowData );
@@ -71,20 +124,36 @@ export default {
 
 		loadData: function()
 		{
+			console.log( `loadData(): totalRows: ${this.totalRows}, loadedRows: ${this.loadedRows}` );
+
 			if (!this.tableConfig || !this.tableConfig.loadDataFunc)
 				return;
 
+			if ((this.totalRows >= 0) && (this.loadedRows == this.totalRows)) {
+				return;
+			}
+
 			this.isLoadingData = true;
 			this.message = "Loading data..."
-			this.showMessage = true;
-			this.tableConfig.loadDataFunc( this.loadingDataCallback );
+			// this.showMessage = true;
+			this.tableConfig.loadDataFunc( this.loadedRows, this.rowsLoadedEachTime, this.loadingDataContext, this.loadingDataCallback );
 		},
 
-		loadingDataCallback: function( isSuccessful, errorMessage )
+		loadingDataCallback: function( isSuccessful, data, errorMessage )
 		{
 			this.isLoadingData = false;
 			if (isSuccessful)
 			{
+				this.loadingDataContext = data.loadingDataContext;
+				this.totalRows = data.totalRows;
+
+				if (this.tableConfig.data == null)
+					this.tableConfig.data = new Array();
+				for (var i = 0; i < data.rowData.length; i ++)
+					this.tableConfig.data.push( data.rowData[i] );
+
+				this.loadedRows += data.rowData.length;
+
 				if ((this.tableConfig.data == null) || (this.tableConfig.data.length == 0))
 				{
 					this.showMessage = true;
@@ -106,6 +175,33 @@ export default {
 			this.$nextTick( () => {
 				this.$refs.tableHead.style.paddingRight = this.$commonUtils.getVirticalScrollBarWidth( this.$refs.tableBody ) + "px";
 			} );
+		},
+
+		onScroll: function()
+		{
+			if ((this.loadedRows == this.totalRows) || this.isLoadingData)
+				return;
+
+			console.log( "onScroll()" );
+
+			var scrollTop = this.$refs.tableBody.scrollTop;
+			var viewportHeight = this.$refs.tableBody.offsetHeight;
+			var firstRowRef = this.makeRowRef( 0 );
+			var firstRow = this.$refs[firstRowRef][0];
+			var firstRowTop = firstRow.offsetTop;
+			var lastRowRef = this.makeRowRef( this.tableConfig.data.length - 1 );
+			var lastRow = this.$refs[lastRowRef][0];
+			var lastRowTop = lastRow.offsetTop;
+			var lastRowScrollTop = lastRow.scrollTop;
+			//console.log( `scrollTop: ${scrollTop}, viewportHeight: ${viewportHeight}, lastRowTop: ${lastRowTop}, lastRowScrollTop: ${lastRowScrollTop}` );
+			
+			if (scrollTop + viewportHeight > lastRowTop - firstRowTop)
+				this.loadData();
+		},
+
+		makeRowRef: function( rowIndex )
+		{
+			return 'row_' + (this.topRowIndex + rowIndex);
 		},
     }
 }
