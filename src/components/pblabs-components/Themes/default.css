@@ -31,5 +31,23 @@
     --list-view-header-font-size: var(--text-size);
     --list-view-header-font-weight: 500;
     --list-view-data-font-size: var(--text-size);
+
+
+
+    --PbTable-table-border: 1px solid #eee;
+    --PbTable-table-borderRadius: 5px;
+	--PbTable-table-background: transparent;
+	--PbTable-headerRow-virticalAlign: center;
+	--PbTable-headerRow-background: #f7f6f3;
+    --PbTable-headerRow-color: #37352f;
+	--PbTable-headerRow-lineHeight: 140%;
+	--PbTable-headerRow-borderBottom: 1px solid #eee;
+	--PbTable-dataRow-virticalAlign: center;
+	--PbTable-dataRow-background: #fff;
+	--PbTable-dataRow-color: #37352f;
+	--PbTable-dataRow-lineHeight: 140%;
+	--PbTable-dataRow-borderBottom: 1px solid #eee;
+	--PbTable-dataRow-hover-background: #f9f9f9;
+	--PbTable-dataRow-selected-background: #eeeef9;
 }
 

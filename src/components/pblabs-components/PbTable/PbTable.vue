@@ -3,7 +3,7 @@
         <div ref="tableHead" class="pb-table-header-row">
             <div class="pb-table-header-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
                 :style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align }">
-                <slot :name="'column_header_' + column.id" :col="column">{{ column.text }}</slot>
+                <slot :name="'column_header_' + column.id" :col="column">{{ column.headerText }}</slot>
             </div>
         </div>
         <div ref="tableBody" class="pb-table-body" @scroll="onScroll">
@@ -61,7 +61,53 @@ export default {
 			console.log( `scrollHeight: function()` );
 			console.log( `this.$refs.tableBody: ${this.$refs.tableBody}` );
 			return this.$refs.tableBody ? this.$refs.tableBody.scrollHeight : 0;
-		}
+		},
+
+		tableStyle: function()
+		{
+			return {
+				border: this.$pbComponentStyles.PbTable.table.border,
+				borderRadius: this.$pbComponentStyles.PbTable.table.borderRadius,
+				background: this.$pbComponentStyles.PbTable.table.background,
+			}
+		},
+
+		headerRowStyle: function()
+		{
+			return {
+				alignItems: this.$pbComponentStyles.PbTable.headerRow.virticalAlign,
+				background: this.$pbComponentStyles.PbTable.headerRow.background,
+				color: this.$pbComponentStyles.PbTable.headerRow.color,
+				lineHeight: this.$pbComponentStyles.PbTable.headerRow.lineHeight,
+				border: this.$pbComponentStyles.PbTable.headerRow.border,
+				borderLeft: this.$pbComponentStyles.PbTable.headerRow.borderLeft,
+				borderRight: this.$pbComponentStyles.PbTable.headerRow.borderRight,
+				borderTop: this.$pbComponentStyles.PbTable.headerRow.borderTop,
+				borderBottom: this.$pbComponentStyles.PbTable.headerRow.borderBottom,
+			}
+		},
+
+		dataRowStyle: function()
+		{
+			return {
+				alignItems: this.$pbComponentStyles.PbTable.dataRow.virticalAlign,
+				background: this.$pbComponentStyles.PbTable.dataRow.background,
+				color: this.$pbComponentStyles.PbTable.dataRow.color,
+				lineHeight: this.$pbComponentStyles.PbTable.dataRow.lineHeight,
+				border: this.$pbComponentStyles.PbTable.dataRow.border,
+				borderLeft: this.$pbComponentStyles.PbTable.dataRow.borderLeft,
+				borderRight: this.$pbComponentStyles.PbTable.dataRow.borderRight,
+				borderTop: this.$pbComponentStyles.PbTable.dataRow.borderTop,
+				borderBottom: this.$pbComponentStyles.PbTable.dataRow.borderBottom,
+			}
+		},
+
+		dataRowSelectedStyle: function()
+		{
+			return {
+				background: this.$pbComponentStyles.PbTable.dataRow.selected.background,
+			}
+		},
 	},
 	watch:
 	{
@@ -120,6 +166,15 @@ export default {
 			} else {
 				this.$emit( 'row-right-clicked', row )
 			}
+		},
+
+		reload: function()
+		{
+			this.loadingDataContext = null;
+			this.totalRows = -1;
+			this.loadedRows = 0;
+			this.tableConfig.data = [];
+			this.loadData();
 		},
 
 		loadData: function()
@@ -209,22 +264,27 @@ export default {
 
 <style scoped>
 .pb-table {
-    background: #eee;
-    border: 1px solid #eee;
-    border-radius: 5px;
     display: flex;
     flex-direction: column;
+
+	border: var(--PbTable-table-border);
+	border-radius: var(--PbTable-table-borderRadius);
+	background: var(--PbTable-table-background);
 }
 
 .pb-table-header-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    line-height: 140%;
-    background: #fff;
-    margin-bottom: 1px;
-    background: #f7f6f3;
-    color: #37352f;
+
+	align-items: var(--PbTable-headerRow-virticalAlign);
+	background: var(--PbTable-headerRow-background);
+	color: var(--PbTable-headerRow-color);
+	line-height: var(--PbTable-headerRow-lineHeight);
+	border: var(--PbTable-headerRow-border);
+	border-left: var(--PbTable-headerRow-border);
+	border-right: var(--PbTable-headerRow-border);
+	border-top: var(--PbTable-headerRow-border);
+	border-bottom: var(--PbTable-headerRow-borderBottom);
 }
 
 .pb-table-body {
@@ -238,18 +298,25 @@ export default {
 .pb-table-data-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    line-height: 140%;
-    background: #fff;
-    margin-bottom: 1px;
+
+	align-items: var(--PbTable-dataRow-virticalAlign);
+	background: var(--PbTable-dataRow-background);
+	color: var(--PbTable-dataRow-color);
+	line-height: var(--PbTable-dataRow-lineHeight);
+	border: var(--PbTable-dataRow-border);
+	border-left: var(--PbTable-dataRow-border);
+	border-right: var(--PbTable-dataRow-border);
+	border-top: var(--PbTable-dataRow-border);
+	border-bottom: var(--PbTable-dataRow-borderBottom);
 }
 
 .pb-table-data-row:hover {
-    background: #f9f9f9;
+    background: var(--PbTable-dataRow-hover-background);
 }
 
 .pb-table-data-row-selected, .pb-table-data-row-selected:hover {
-    background: #eeeef9;
+    background: var(--PbTable-dataRow-selected-background);
+	color: var(--PbTable-dataRow-selected-color);
 }
 
 .pb-table-header-cell {
