@@ -1,7 +1,7 @@
 <template>
 	<div class="modal-mask" v-if="showDialog" @keydown.esc="onEscKeyDown">
         <div class="dialog-box-wrapper" ref="dialogBoxFrame">
-            <div class="dialog-box-body" :style="{ width: (width > 0) ? width : (dialogBoxConfig.width > 0 ? dialogBoxConfig.width : DEFAULT_WIDTH) + 'px' }">
+            <div class="dialog-box-body" :style="{ width: (width > 0) ? width + 'px' : (dialogBoxConfig.width > 0 ? dialogBoxConfig.width : DEFAULT_WIDTH) + 'px' }">
                 <div class="title-bar" @mousedown="onTitleBarMouseDown">
                     <div style="flex: auto;" class="title-text">{{ title ? title : dialogBoxConfig.title }}</div>
                     <div style="display: table;">
@@ -13,12 +13,12 @@
                     <slot name="contents"></slot>
                 </div>
                 <div style="height: 0px; border-top: 1px solid #d6d6d6;"></div>
-                <div class="button-bar">
+                <div v-if="buttons.length > 0" class="button-bar">
                     <div style="flex: auto;">
-                        <pb-button style="margin-right: 6px;">Help</pb-button>
+                        <!-- <pb-button style="margin-right: 6px;">Help</pb-button> -->
                     </div>
                     <div>
-                        <pb-button v-for="(item, itemIndex) in dialogBoxConfig.buttons" :key="itemIndex"
+                        <pb-button v-for="(item, itemIndex) in buttons" :key="itemIndex"
 							style="margin-left: 6px;" :is-default="item.isDefault" @click="onButtonClicked( item )">
 							{{ item.text }}
 						</pb-button>
@@ -63,6 +63,14 @@ export default {
                     { text: "Help", isHelpButton: true },
                 ],
             }
+        }
+    },
+
+    computed:
+    {
+        buttons: function()
+        {
+            return (this.dialogBoxConfig && this.dialogBoxConfig.buttons) ? this.dialogBoxConfig.buttons : [];
         }
     },
     
