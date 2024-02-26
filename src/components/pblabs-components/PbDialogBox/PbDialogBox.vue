@@ -171,7 +171,8 @@ export default {
 .dialog-box-body {
     display: flex;
     flex-direction: column;
-    border-radius: 4px;
+    border-radius: 8px;
+    overflow: hidden;
     background-color: #fff;
     box-shadow: 0 2px 8px rgba( 0, 0, 0, .3 );
     transition: opacity .5s ease;
