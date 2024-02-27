@@ -6,7 +6,12 @@
 				<div style="font-size: 24px;">Home</div>
 			</template>
 			<template v-slot:grid_1>
-				<pb-button @click="showAboutDialogBox">About</pb-button>
+				<div style="display: flex; flex-direction: row;">
+					<pb-dropdown-button :config="languageDropdownConfig" @option-selected="onLanguageOptionSelected">
+						<template v-slot:button>{{ languageDropdownConfig.dropdownOptions[languageDropdownConfig.selectedOption].diaplayName }}</template>
+					</pb-dropdown-button>
+					<pb-button style="margin-left: 8px;" @click="showAboutDialogBox">About</pb-button>
+				</div>
 			</template>
 		</pb-h-grids>
 
@@ -72,7 +77,22 @@ export default {
 				form: {
 					url: "",
 				}
-			}
+			},
+
+			languageDropdownConfig: {
+				dropdownType: "Options",
+				dropdownOptionStyle: "nameOnly", // nameAndDesc
+				dropdownOptions: [
+					{ diaplayName: "English", value: "en-US" },
+					{ diaplayName: "Chinese (Simplified)", value: "zh-CN" },
+					{ diaplayName: "Chinese (Traditional)", value: "zh-TW" },
+					{ diaplayName: "French", value: "fr-FR" },
+					{ diaplayName: "German", value: "" },
+					{ diaplayName: "Japanese", value: "jp-JA" },
+				],
+				selectedOption: 0,
+				markSelectedOption: true,
+			},
 		}
 	},
 	methods:
@@ -102,7 +122,12 @@ export default {
 
 			// if OK clicked
 			// ...
-		}
+		},
+
+		onLanguageOptionSelected: function( option )
+		{
+			// this.$set( this.$i18n, "locale", option.value );
+		},
 	}
 }
 </script>
