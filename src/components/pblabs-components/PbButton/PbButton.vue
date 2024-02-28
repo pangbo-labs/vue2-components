@@ -1,6 +1,7 @@
 <template>
 	<pb-tooltip-anchor style="display: inline-block;">
-		<button class="pb-button" :class="{ 'default-button': isDefault, 'disabled-button': isDisabled }" :style="{ 'font-size': textSize + 'px' }" @click="onClick">
+		<button :class="[ customClass ? customClass : 'pb-button', { 'default-button': isDefault, 'disabled-button': isDisabled } ]"
+			:style="{ 'font-size': textSize + 'px' }" @click="onClick">
 			<i v-if="iconName && showIcon" class="material-symbols material-symbols-rounded button-icon">{{ iconName }}</i>
 			<slot></slot>
 		</button>
@@ -21,6 +22,7 @@ export default {
 		isDisabled:			{ type: Boolean, default: false },
 		tooltipMaxWidth:	{ type: Number, default: 250 },
 		textSize:			{ type: Number, default: 13 },
+		customClass:		{ type: String, default: null },
 	},
 
 	data: function() {
@@ -32,7 +34,7 @@ export default {
 
 		onClick: function( event )
 		{
-			console.log( event );
+			// console.log( event );
 			if (this.isDisabled)
 				return;
 			this.$emit( "click" );
