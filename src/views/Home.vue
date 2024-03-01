@@ -1,19 +1,19 @@
 <template>
 	<div style="padding: 30px 30px;" @contextmenu="onRightClicked">
 		
-		<pb-h-grids :config="hGridsConfig">
-			<template v-slot:grid_0>
+		<pb-stack :item-spacing="20" style="margin-top: 10px;">
+			<pb-stack-item>
 				<div style="font-size: 24px;">Home</div>
-			</template>
-			<template v-slot:grid_1>
+			</pb-stack-item>
+			<pb-stack-item :size="0">
 				<div style="display: flex; flex-direction: row;">
 					<pb-dropdown-button :config="languageDropdownConfig" @option-selected="onLanguageOptionSelected">
 						<template v-slot:button>{{ languageDropdownConfig.dropdownOptions[languageDropdownConfig.selectedOption].diaplayName }}</template>
 					</pb-dropdown-button>
 					<pb-button style="margin-left: 8px;" @click="showAboutDialogBox">About</pb-button>
 				</div>
-			</template>
-		</pb-h-grids>
+			</pb-stack-item>
+		</pb-stack>
 
 		<pb-tab-bar :tabs="tabs" style="width: 100%; margin-top: 20px;" @active-tab-changed="onActiveTabChanged" />
 
@@ -36,15 +36,6 @@ export default {
 	data: function()
 	{
 		return {
-
-			hGridsConfig: {
-				grids: [
-					{ size: -1,	align: "Left" },
-					{ size: 10,	align: "Right" },
-				],
-				gridSpacing: 20,
-				showBorder: false,
-			},
 
 			tabs: [
 				{ id: "systemInfo",			text: "System Info" },

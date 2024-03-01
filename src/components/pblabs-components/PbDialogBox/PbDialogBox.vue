@@ -3,27 +3,29 @@
         <div class="dialog-box-wrapper" ref="dialogBoxFrame">
             <div class="dialog-box-body" :style="{ width: (width > 0) ? width + 'px' : (dialogBoxConfig.width > 0 ? dialogBoxConfig.width : DEFAULT_WIDTH) + 'px' }">
                 <div class="title-bar" @mousedown="onTitleBarMouseDown">
-                    <div style="flex: auto;" class="title-text">{{ title ? title : dialogBoxConfig.title }}</div>
-                    <div style="display: table;">
-                        <div style="display: table-cell; vertical-align: middle;" class="control-button" @click="cancelDialog()">✕</div>
-                    </div>
+					<pb-stack :item-spacing="20">
+						<pb-stack-item class="title-text">{{ title ? title : dialogBoxConfig.title }}</pb-stack-item>
+						<pb-stack-item :size="0">
+							<div class="control-button" @click="cancelDialog()">✕</div>
+						</pb-stack-item>
+					</pb-stack>
                 </div>
                 <div style="height: 0px; border-top: 1px solid #d6d6d6;"></div>
                 <div class="contents">
                     <slot name="contents"></slot>
                 </div>
                 <div style="height: 0px; border-top: 1px solid #d6d6d6;"></div>
-                <div v-if="buttons.length > 0" class="button-bar">
-                    <div style="flex: auto;">
-                        <!-- <pb-button style="margin-right: 6px;">Help</pb-button> -->
-                    </div>
-                    <div>
-                        <pb-button v-for="(item, itemIndex) in buttons" :key="itemIndex"
+                <pb-stack v-if="buttons.length > 0" :item-spacing="30" class="button-bar">
+					<pb-stack-item>
+						<!-- <pb-button style="margin-right: 6px;">Help</pb-button> -->
+					</pb-stack-item>
+					<pb-stack-item :size="0">
+						<pb-button v-for="(item, itemIndex) in buttons" :key="itemIndex"
 							style="margin-left: 6px;" :is-default="item.isDefault" @click="onButtonClicked( item )">
 							{{ item.text }}
 						</pb-button>
-                    </div>
-                </div>
+					</pb-stack-item>
+				</pb-stack>
             </div>
         </div>
 	</div>
@@ -181,8 +183,6 @@ export default {
 .title-bar {
     background-color: #fff;
     padding: 15px 25px 12px 25px;
-    display: flex;
-    flex-direction: row;
 }
 
 .title-text {
@@ -193,10 +193,14 @@ export default {
 }
 
 .control-button {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
     width: 25px;
     height: 25px;
     border: 1px solid transparent;
-    text-align: center;
+	border-radius: 3px;
     color: #999;
     font-size: 14px;
     line-height: 100%;
