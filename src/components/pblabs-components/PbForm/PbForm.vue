@@ -7,6 +7,7 @@
                 <td class="field-value-container">
                     <div v-if="item.type == 'StaticText'" class="field field-static-text">{{ item.value }}</div>
                     <pb-time-picker v-else-if="item.type == 'TimePicker'" v-model="item.value" :mode="item.mode" :result-mode="item.resultMode" class="field" />
+					<input v-else-if="item.type == 'Password'" type="password" v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled" :placeholder="item.placeholder" :required="item.required">
 					<input v-else type="text" v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled" :placeholder="item.placeholder" :required="item.required">
 				</td>
             </tr>
@@ -19,7 +20,7 @@ export default {
     name: "PbForm",
     props:
     {
-        data: { type: Array, default: [] },
+        data: { type: Object, default: new Object() },
     },
     data: function()
     {

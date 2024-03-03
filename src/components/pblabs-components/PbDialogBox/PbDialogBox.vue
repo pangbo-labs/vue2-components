@@ -15,7 +15,7 @@
                     <slot name="contents"></slot>
                 </div>
                 <div style="height: 0px; border-top: 1px solid #d6d6d6;"></div>
-                <pb-stack v-if="buttons.length > 0" :item-spacing="30" class="button-bar">
+                <pb-stack v-if="this.dialogBoxConfig && !this.dialogBoxConfig.noButtonBar" :item-spacing="30" class="button-bar">
 					<pb-stack-item>
 						<!-- <pb-button style="margin-right: 6px;">Help</pb-button> -->
 					</pb-stack-item>
@@ -64,7 +64,7 @@ export default {
                 leftButtons: [
                     { text: "Help", isHelpButton: true },
                 ],
-            }
+            },
         }
     },
 
@@ -72,7 +72,10 @@ export default {
     {
         buttons: function()
         {
-            return (this.dialogBoxConfig && this.dialogBoxConfig.buttons) ? this.dialogBoxConfig.buttons : [];
+			if (!this.dialogBoxConfig)
+				return [];
+
+            return this.dialogBoxConfig.buttons ? this.dialogBoxConfig.buttons : this.defaultDialogBoxConfig.buttons;
         }
     },
     
