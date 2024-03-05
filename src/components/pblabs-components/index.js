@@ -22,6 +22,8 @@ import PbPropertyTable from "./PbPropertyTable/PbPropertyTable.vue"
 import PbPropertyTableEntry from "./PbPropertyTable/PbPropertyTableEntry.vue"
 import PbPropertyTableSeparator from "./PbPropertyTable/PbPropertyTableSeparator.vue"
 
+import MessageBox from "./MessageBox.js"
+
 const components = [
 	PbVerticalNaviBar,
 	PbContextMenu,
@@ -154,6 +156,8 @@ export default
 			console.log( `Installing ${element.name}...` )
 			Vue.component( element.name, element );
 		});
+
+		MessageBox.install( Vue );
 
 		console.log( "Finished installing the PbComponents." );
 	},

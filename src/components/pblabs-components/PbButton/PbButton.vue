@@ -54,6 +54,9 @@ export default {
 	color: #333;
 	padding: 5px 12px;
 	line-height: 140%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 	user-select: none;
 }
 
