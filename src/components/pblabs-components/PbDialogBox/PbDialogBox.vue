@@ -96,7 +96,8 @@ export default {
         },
 
         cancelDialog: function() {
-            this.endDialog( true );
+			this.endDialog( true );
+			this.$emit( "cancel-button-clicked" );
         },
 
         onOkClicked: function() {
@@ -110,6 +111,7 @@ export default {
 		},
 
         onEscKeyDown: function() {
+			console.log( "ESC pressed" );
             this.cancelDialog();
         },
 

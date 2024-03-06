@@ -1,6 +1,6 @@
 <template>
-    <pb-dialog-box :show-dialog.sync="dialogBoxConfig.isVisible" :dialog-box-config="dialogBoxConfig" @ok-button-clicked="onOkButtonClicked"
-		@dialog-ended="onDialogEnded">
+    <pb-dialog-box :show-dialog.sync="dialogBoxConfig.isVisible" :dialog-box-config="dialogBoxConfig"
+		@ok-button-clicked="onOkButtonClicked" @cancel-button-clicked="onCancelButtonClicked">
 		<template v-slot:contents>
 			<pb-stack :item-spacing="20" align-items="center" padding="0 10px">
 				<pb-stack-item :size="0">
@@ -73,7 +73,6 @@ export default {
 		onOkButtonClicked: function( okButtonClickedCallback )
 		{
 			okButtonClickedCallback( true );
-			console.log( this.dialogBoxConfig.callback );
 			if (this.dialogBoxConfig.callback) {
 				if ((this.messageBoxType = "MessageBox") && this.dialogBoxConfig.callback.acknowledged) {
 					this.dialogBoxConfig.callback.acknowledged( this.dialogBoxConfig.callback.callbackParam );
@@ -84,16 +83,15 @@ export default {
 			}
 		},
 
-		onDialogEnded: function( isCancelled )
+		onCancelButtonClicked: function()
 		{
-			console.log( "" )
-
-			if (isCancelled)
-				return;
-
-			// if OK clicked
-			// ...
-		}
+			console.log( this.dialogBoxConfig.callback );
+			if (this.dialogBoxConfig.callback) {
+				if ((this.messageBoxType = "ConfirmBox") && this.dialogBoxConfig.callback.denied) {
+					this.dialogBoxConfig.callback.denied( this.dialogBoxConfig.callback.callbackParam );
+				}
+			}
+		},
     }
 }
 </script>

@@ -10,7 +10,7 @@ function createInstance()
 	g_msgBoxInstance = new constructor();
 	g_msgBoxInstance.$mount();
 	document.body.appendChild( g_msgBoxInstance.$el );
-	console.log( g_msgBoxInstance );
+	// console.log( g_msgBoxInstance );
 }
 
 function showMessageBox( title, message, iconType, callback )
