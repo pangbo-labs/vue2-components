@@ -50,7 +50,7 @@ export default {
 			topRowYOffset: 0,
 			renderedRows: 0,
 			renderedHeight: 0,
-			rowsLoadedEachTime: 20,
+			defaultLoadingBatchSize: 50,
 			tableBody: this.$refs.tableBody,
         }
     },
@@ -191,7 +191,8 @@ export default {
 			this.isLoadingData = true;
 			this.message = "Loading data..."
 			// this.showMessage = true;
-			this.tableConfig.loadDataFunc( this.loadedRows, this.rowsLoadedEachTime, this.loadingDataContext, this.loadingDataCallback );
+			var loadingBatchSize = this.tableConfig.loadingBatchSize ? this.tableConfig.loadingBatchSize : this.defaultLoadingBatchSize;
+			this.tableConfig.loadDataFunc( this.loadedRows, loadingBatchSize, this.loadingDataContext, this.loadingDataCallback );
 		},
 
 		loadingDataCallback: function( isSuccessful, data, errorMessage )
