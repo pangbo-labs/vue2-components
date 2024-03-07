@@ -75,10 +75,10 @@ export default {
 			okButtonClickedCallback( true );
 			if (this.dialogBoxConfig.callback) {
 				if ((this.messageBoxType = "MessageBox") && this.dialogBoxConfig.callback.acknowledged) {
-					this.dialogBoxConfig.callback.acknowledged( this.dialogBoxConfig.callback.callbackParam );
+					this.dialogBoxConfig.callback.acknowledged();
 				}
 				if ((this.messageBoxType = "ConfirmBox") && this.dialogBoxConfig.callback.confirmed) {
-					this.dialogBoxConfig.callback.confirmed( this.dialogBoxConfig.callback.callbackParam );
+					this.dialogBoxConfig.callback.confirmed();
 				}
 			}
 		},
@@ -88,7 +88,7 @@ export default {
 			console.log( this.dialogBoxConfig.callback );
 			if (this.dialogBoxConfig.callback) {
 				if ((this.messageBoxType = "ConfirmBox") && this.dialogBoxConfig.callback.denied) {
-					this.dialogBoxConfig.callback.denied( this.dialogBoxConfig.callback.callbackParam );
+					this.dialogBoxConfig.callback.denied();
 				}
 			}
 		},
