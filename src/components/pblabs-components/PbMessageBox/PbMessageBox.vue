@@ -10,7 +10,7 @@
 					<i v-if="dialogBoxConfig.iconType == 'Question'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #69f;">help</i>
 				</pb-stack-item>
 				<pb-stack-item>
-					<div class="message-text">{{ dialogBoxConfig.message }}</div>
+					<div class="message-text" v-html="dialogBoxConfig.message"></div>
 				</pb-stack-item>
 			</pb-stack>
 		</template>
@@ -75,10 +75,10 @@ export default {
 			okButtonClickedCallback( true );
 			if (this.dialogBoxConfig.callback) {
 				if ((this.messageBoxType = "MessageBox") && this.dialogBoxConfig.callback.acknowledged) {
-					this.dialogBoxConfig.callback.acknowledged();
+					this.dialogBoxConfig.callback.acknowledged( this.dialogBoxConfig.callback.callbackParam );
 				}
 				if ((this.messageBoxType = "ConfirmBox") && this.dialogBoxConfig.callback.confirmed) {
-					this.dialogBoxConfig.callback.confirmed();
+					this.dialogBoxConfig.callback.confirmed( this.dialogBoxConfig.callback.callbackParam );
 				}
 			}
 		},
@@ -88,7 +88,7 @@ export default {
 			console.log( this.dialogBoxConfig.callback );
 			if (this.dialogBoxConfig.callback) {
 				if ((this.messageBoxType = "ConfirmBox") && this.dialogBoxConfig.callback.denied) {
-					this.dialogBoxConfig.callback.denied();
+					this.dialogBoxConfig.callback.denied( this.dialogBoxConfig.callback.callbackParam );
 				}
 			}
 		},

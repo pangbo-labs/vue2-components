@@ -325,6 +325,7 @@ export default {
     padding: 10px 16px;
     font-size: var(--list-view-header-font-size);
     font-weight: var(--list-view-header-font-weight);
+	overflow: hidden;
     user-select: none;
 }
 
@@ -332,6 +333,7 @@ export default {
     width: 160px;
     padding: 10px 16px;
     font-size: var(--list-view-data-font-size);
+	overflow: hidden;
     user-select: none;
 }
 
