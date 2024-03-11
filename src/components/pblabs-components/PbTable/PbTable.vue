@@ -2,8 +2,17 @@
     <div class="pb-table">
         <div ref="tableHead" class="pb-table-header-row">
 			<div class="pb-table-header-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
-                :style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align }">
-                <slot :name="'column_header_' + column.id" :col="column">{{ column.headerTextId ? $t( column.headerTextId ) : column.headerText }}</slot>
+                :style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'justify-content': column.align }"
+				@click="onColumnHeaderClicked( column )">
+				<pb-stack style="width: fit-content;">
+					<pb-stack-item :size="0">
+						<slot :name="'column_header_' + column.id" :col="column">{{ column.headerTextId ? $t( column.headerTextId ) : column.headerText }}</slot>
+					</pb-stack-item>
+					<pb-stack-item :size="0" v-if="sorting.column == column.id">
+						<i v-if="(sorting.column == column.id) && (sorting.direction == 1)" class="material-symbols material-symbols-rounded sorting-icon">arrow_upward</i>
+						<i v-if="(sorting.column == column.id) && (sorting.direction == -1)" class="material-symbols material-symbols-rounded sorting-icon">arrow_downward</i>
+					</pb-stack-item>
+				</pb-stack>
             </div>
         </div>
         <div ref="tableBody" class="pb-table-body" @scroll="onScroll">
@@ -52,6 +61,10 @@ export default {
 			renderedHeight: 0,
 			defaultLoadingBatchSize: 50,
 			tableBody: this.$refs.tableBody,
+			sorting: {
+				column: "", // column id
+				direction: 1, // 1 for ascend, -1 for descend
+			}
         }
     },
 	computed:
@@ -144,6 +157,13 @@ export default {
 			immediate: true,
 		},
 	},
+	mounted: function()
+	{
+		if ((this.tableConfig) && (this.tableConfig.initialSorting))
+		{
+			this.sorting = this.tableConfig.initialSorting;
+		}
+	},
 	methods:
 	{
         onRowMouseDown: function( rowData )
@@ -192,7 +212,7 @@ export default {
 			this.message = "Loading data..."
 			// this.showMessage = true;
 			var loadingBatchSize = this.tableConfig.loadingBatchSize ? this.tableConfig.loadingBatchSize : this.defaultLoadingBatchSize;
-			this.tableConfig.loadDataFunc( this.loadedRows, loadingBatchSize, this.loadingDataContext, this.loadingDataCallback );
+			this.tableConfig.loadDataFunc( this.loadedRows, loadingBatchSize, this.sorting, this.loadingDataContext, this.loadingDataCallback );
 		},
 
 		loadingDataCallback: function( isSuccessful, data, errorMessage )
@@ -259,6 +279,23 @@ export default {
 		{
 			return 'row_' + (this.topRowIndex + rowIndex);
 		},
+
+		onColumnHeaderClicked: function( column )
+		{
+			if (column.isRowNoColumn)
+				return;
+
+			if (this.sorting.column == column.id)
+			{
+				this.sorting.direction *= -1;
+			}
+			else
+			{
+				this.sorting.column = column.id;
+				this.sorting.direction = 1;
+			}
+			this.reload();
+		}
     }
 }
 </script>
@@ -286,6 +323,13 @@ export default {
 	border-right: var(--PbTable-headerRow-border);
 	border-top: var(--PbTable-headerRow-border);
 	border-bottom: var(--PbTable-headerRow-borderBottom);
+}
+
+.sorting-icon {
+	display: inline-block;
+	font-size: 20px;
+	margin-left: 6px;
+	vertical-align: top;
 }
 
 .pb-table-body {
@@ -327,6 +371,8 @@ export default {
     font-weight: var(--list-view-header-font-weight);
 	overflow: hidden;
     user-select: none;
+	display: flex;
+	flex-direction: row;
 }
 
 .pb-table-data-cell {
