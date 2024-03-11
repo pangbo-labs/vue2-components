@@ -1,9 +1,9 @@
 <template>
     <div class="pb-table">
         <div ref="tableHead" class="pb-table-header-row">
-            <div class="pb-table-header-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
+			<div class="pb-table-header-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
                 :style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align }">
-                <slot :name="'column_header_' + column.id" :col="column">{{ column.headerText }}</slot>
+                <slot :name="'column_header_' + column.id" :col="column">{{ column.headerTextId ? $t( column.headerTextId ) : column.headerText }}</slot>
             </div>
         </div>
         <div ref="tableBody" class="pb-table-body" @scroll="onScroll">
@@ -18,7 +18,7 @@
 					<div class="pb-table-data-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
 						:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align, 'user-select': column.allowSelectContents ? 'auto' : 'none' }"
 						@click="$emit( 'data-cell-clicked', row, column )">
-						<slot :name="'column_data_' + column.id" :row="row" :col="column">{{ row[column.id] }}</slot>
+						<slot :name="'column_data_' + column.id" :row="row" :col="column">{{ column.isRowNoColumn ? (rowIndex + 1) : row[column.id] }}</slot>
 					</div>
 				</div>
 				<div v-if="isLoadingData" class="pb-table-message">Loading...</div>
