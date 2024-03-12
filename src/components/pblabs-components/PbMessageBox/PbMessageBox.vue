@@ -4,10 +4,10 @@
 		<template v-slot:contents>
 			<pb-stack :item-spacing="20" align-items="center" padding="0 10px">
 				<pb-stack-item :size="0">
-					<i v-if="dialogBoxConfig.iconType == 'Info'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #999;">info</i>
-					<i v-if="dialogBoxConfig.iconType == 'Warning'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #fc3;">warning</i>
-					<i v-if="dialogBoxConfig.iconType == 'Error'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #f66;">error</i>
-					<i v-if="dialogBoxConfig.iconType == 'Question'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #69f;">help</i>
+					<i v-if="dialogBoxConfig.iconType == 'InfoIcon'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #999;">info</i>
+					<i v-if="dialogBoxConfig.iconType == 'WarningIcon'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #fc3;">warning</i>
+					<i v-if="dialogBoxConfig.iconType == 'ErrorIcon'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #f66;">error</i>
+					<i v-if="dialogBoxConfig.iconType == 'QuestionIcon'" class="material-symbols material-symbols-rounded message-box-icon" style="color: #69f;">help</i>
 				</pb-stack-item>
 				<pb-stack-item>
 					<div class="message-text" v-html="dialogBoxConfig.message"></div>
@@ -53,7 +53,7 @@ export default {
 			this.messageBoxType = "MessageBox";
             this.dialogBoxConfig.title = title;
             this.dialogBoxConfig.message = message;
-			this.dialogBoxConfig.iconType = iconType ? iconType : "Info";
+			this.dialogBoxConfig.iconType = iconType ? iconType : "InfoIcon";
 			this.dialogBoxConfig.buttons = this.messageBoxButtons;
 			this.dialogBoxConfig.callback = callback;
             this.dialogBoxConfig.isVisible = true;
@@ -64,7 +64,7 @@ export default {
 			this.messageBoxType = "ConfirmBox";
             this.dialogBoxConfig.title = title;
             this.dialogBoxConfig.message = message;
-			this.dialogBoxConfig.iconType = "Question";
+			this.dialogBoxConfig.iconType = "QuestionIcon";
 			this.dialogBoxConfig.buttons = this.confirmBoxButtons;
 			this.dialogBoxConfig.callback = callback;
             this.dialogBoxConfig.isVisible = true;

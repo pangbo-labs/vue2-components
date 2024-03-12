@@ -25,8 +25,6 @@
 				<div style="margin-bottom: 20px; line-height: 150%;">This is an example application to demonstrate the components. This is an example application to demonstrate the components.</div>
 			</template>
 		</pb-dialog-box>
-
-		<pb-message-box ref="messageBox" />
 	</div>
 </template>
 
@@ -100,8 +98,7 @@ export default {
 
 		showAboutDialogBox: function()
 		{
-			//this.aboutDialog.isVisible = true;
-			this.$refs.messageBox.showMessageBox( "About", "This is an example application to demonstrate the components." );
+			this.$showMessage( "About", "This is an example application to demonstrate the components." );
 		},
 
 		aboutDialog_OnDialogEnded: function( isCancelled )
