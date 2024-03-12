@@ -190,6 +190,12 @@ export default {
 
 		reload: function()
 		{
+			if (this.isLoadingData)
+			{
+				console.log( "Already loading now, ignore new loading request." );
+				return;
+			}
+
 			this.loadingDataContext = null;
 			this.totalRows = -1;
 			this.loadedRows = 0;
@@ -220,6 +226,8 @@ export default {
 			this.isLoadingData = false;
 			if (isSuccessful)
 			{
+				console.log( `loadingDataCallback(): this.totalRows: ${this.totalRows}, this.loadedRows: ${this.loadedRows}` );
+
 				this.loadingDataContext = data.loadingDataContext;
 				this.totalRows = data.totalRows;
 
@@ -240,6 +248,8 @@ export default {
 					this.showMessage = false;
 					this.message = "";
 				}
+
+				console.log( `loadingDataCallback(): this.totalRows: ${this.totalRows}, this.loadedRows: ${this.loadedRows}` );
 			}
 			else // failed
 			{
