@@ -64,7 +64,8 @@ export default {
 			sorting: {
 				column: "", // column id
 				direction: 1, // 1 for ascend, -1 for descend
-			}
+			},
+			loadingDataToken: 0,
         }
     },
 	computed:
@@ -217,8 +218,9 @@ export default {
 			this.isLoadingData = true;
 			this.message = "Loading data..."
 			// this.showMessage = true;
+			this.loadingDataToken = Date.now();
 			var loadingBatchSize = this.tableConfig.loadingBatchSize ? this.tableConfig.loadingBatchSize : this.defaultLoadingBatchSize;
-			this.tableConfig.loadDataFunc( this.loadedRows, loadingBatchSize, this.sorting, this.loadingDataContext, this.loadingDataCallback );
+			this.tableConfig.loadDataFunc( this.loadedRows, loadingBatchSize, this.sorting, this.loadingDataContext, this.loadingDataToken, this.loadingDataCallback );
 		},
 
 		loadingDataCallback: function( isSuccessful, data, errorMessage )
@@ -227,6 +229,12 @@ export default {
 			if (isSuccessful)
 			{
 				console.log( `loadingDataCallback(): this.totalRows: ${this.totalRows}, this.loadedRows: ${this.loadedRows}` );
+
+				if (!data.loadingDataToken || (data.loadingDataToken != this.loadingDataToken)) {
+					return;
+				}
+
+				this.loadingDataToken = 0;
 
 				this.loadingDataContext = data.loadingDataContext;
 				this.totalRows = data.totalRows;

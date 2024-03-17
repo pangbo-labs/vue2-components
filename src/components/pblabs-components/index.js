@@ -21,6 +21,8 @@ import PbStackItem from './PbStack/PbStackItem.vue'
 import PbPropertyTable from "./PbPropertyTable/PbPropertyTable.vue"
 import PbPropertyTableEntry from "./PbPropertyTable/PbPropertyTableEntry.vue"
 import PbPropertyTableSeparator from "./PbPropertyTable/PbPropertyTableSeparator.vue"
+import PbSelect from './PbSelect/PbSelect.vue'
+import PbBasicPopup from './PbBasicPopup/PbBasicPopup.vue'
 
 import MessageBox from "./MessageBox.js"
 
@@ -43,6 +45,8 @@ const components = [
 	PbPropertyTable,
 	PbPropertyTableEntry,
 	PbPropertyTableSeparator,
+	PbSelect,
+	PbBasicPopup,
 ];
 
 const PbComponentStyles = {

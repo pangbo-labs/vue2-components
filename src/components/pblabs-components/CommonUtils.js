@@ -34,7 +34,9 @@ export default {
 			left: position.x,
 			top: position.y,
 			right: position.x + element.offsetWidth - 1,
-			bottom: position.y + element.offsetHeight - 1
+			bottom: position.y + element.offsetHeight - 1,
+			width: element.offsetWidth,
+			height: element.offsetHeight
 		}
 	},
 
