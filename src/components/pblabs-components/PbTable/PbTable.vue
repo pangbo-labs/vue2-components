@@ -1,6 +1,11 @@
 <template>
     <div class="pb-table">
         <div ref="tableHead" class="pb-table-header-row">
+			<div v-if="tableConfig.showRowCheckBox" class="pb-table-header-cell" style="flex: 0; width: 40; justify-content: center;">
+				<i v-if="areAllSelected" ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box" @click="toggleSelectAll()">check_box</i>
+				<i v-else ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box" @click="toggleSelectAll()">check_box_outline_blank</i>
+				<!-- <input ref="selectAllCheckBox" type="checkbox" @click="toggleSelectAll()"> -->
+            </div>
 			<div class="pb-table-header-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
                 :style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'justify-content': column.align }"
 				@click="onColumnHeaderClicked( column )">
@@ -19,11 +24,16 @@
 			<div v-if="showMessage" class="pb-table-message" v-html="message"></div>
 			<div v-else>
 				<div v-for="(row, rowIndex) in tableConfig.data" :key="rowIndex" class="pb-table-data-row" :ref="makeRowRef( rowIndex )"
-					:class="{ 'pb-table-data-row-selected': selectedRows.includes( row ) }"
-					@mousedown="onRowMouseDown( row )"
+					:class="{ 'pb-table-data-row-selected': selectedRows.has( row ) }"
+					@mousedown="onRowMouseDown( rowIndex, row, $event )"
 					@click="$emit( 'row-clicked', row )"
 					@dblclick="$emit( 'row-double-clicked', row )"
 					@contextmenu="onTableRowRightClicked( row, $event )">
+					<div v-if="tableConfig.showRowCheckBox" class="pb-table-header-cell" style="flex: 0; width: 40; justify-content: center;">
+						<i v-if="selectedRows.has( row )" ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box</i>
+						<i v-else ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box_outline_blank</i>
+						<!-- <input type="checkbox" :checked="selectedRows.has( row )" @change="onRowCheckBoxClicked( row, $event )"> -->
+					</div>
 					<div class="pb-table-data-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
 						:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align, 'user-select': column.allowSelectContents ? 'auto' : 'none' }"
 						@click="$emit( 'data-cell-clicked', row, column )">
@@ -48,7 +58,9 @@ export default {
     data: function()
 	{
         return {
-            selectedRows: [],
+            selectedRows: new Set(),
+			focusedRow: -1,
+			areAllSelected: false,
 			isLoadingData: false,
 			showMessage: false,
 			message: "",
@@ -167,11 +179,47 @@ export default {
 	},
 	methods:
 	{
-        onRowMouseDown: function( rowData )
+        onRowMouseDown: function( rowIndex, rowData, event )
         {
-            console.log( rowData );
-            this.selectedRows = [];
-            this.selectedRows.push( rowData );
+			if (event.shiftKey)
+			{
+				let i;
+				let rows = this.tableConfig.data;
+				this.selectedRows.clear();
+				if (rowIndex < this.focusedRow)
+				{
+					for (i = rowIndex; i <= this.focusedRow; i ++)
+						this.selectedRows.add( rows[i] );
+				}
+				else // rowIndex >= this.focusedRow
+				{
+					for (i = this.focusedRow; i <= rowIndex; i ++)
+						this.selectedRows.add( rows[i] );
+				}
+			}
+			else if (event.ctrlKey)
+			{
+				if (this.selectedRows.has( rowData ))
+					this.selectedRows.delete( rowData );
+				else
+					this.selectedRows.add( rowData );
+			}
+			else if ((this.selectedRows.size == 1) && this.selectedRows.has( rowData ))
+			{
+				this.selectedRows.clear();
+			}
+			else
+			{
+				this.selectedRows.clear();
+				this.selectedRows.add( rowData );
+			}
+			this.focusedRow = rowIndex;
+
+			this.areAllSelected = (this.selectedRows.size == this.tableConfig.data.length);
+			if (this.$refs.selectAllCheckBox)
+				this.$refs.selectAllCheckBox.checked = this.areAllSelected;
+			
+			this.$forceUpdate();
         },
 
         onTableRowRightClicked: function( row, event )
@@ -312,7 +360,34 @@ export default {
 				this.sorting.column = column.id;
 				this.sorting.direction = 1;
 			}
+
+			this.selectedRows.clear();
+			this.focusedRow = -1;
+
 			this.reload();
+		},
+
+		onRowCheckBoxClicked: function( row, event )
+		{
+			console.log( "onRowCheckBoxClicked()" );
+			console.log( event.target.checked );
+		},
+
+		toggleSelectAll: function()
+		{
+			if (this.$refs.selectAllCheckBox.checked)
+			{
+				for (var i = 0; i < this.tableConfig.data.length; i ++)
+				{
+					var row = this.tableConfig.data[i];
+					this.selectedRows.add( row );
+				}
+			}	
+			else
+			{
+				this.selectedRows.clear();
+			}
+			this.$forceUpdate();
 		}
     }
 }
@@ -409,5 +484,9 @@ export default {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+}
+
+.pb-table-row-check-box {
+	font-size: 19px;
 }
 </style>
