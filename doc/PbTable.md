@@ -1,5 +1,12 @@
 # PbTable
 
+This document will cover following aspects of the `PbTable`:
+
+- Configuration
+- Data
+- Operations
+- Events
+
 ## Configuration
 
 ### `columns`
