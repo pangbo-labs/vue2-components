@@ -6,6 +6,7 @@ This document will cover following aspects of the `PbTable`:
 - Data
 - Operations
 - Events
+- Style
 
 ## Configuration
 
@@ -25,15 +26,16 @@ columns: [
 
 Following table describes each field in detail.
 
-| Property Name | Description                                                  |
-| :------------ | :----------------------------------------------------------- |
-| `id`          | ID of the column. If `dataField` is not specified, `id` will be used as data field name to choose data to show in the column. |
-| `headerText` | The text shown on the column header. |
-| `headerTextId` | The string ID for localized string of the column header text. If both `headerText` and `headerTextId` are specified, `headerTextId` will be use to get localized string and `headerText` will be ignored. |
-| `width` | The width of the column in pixels. `0` stands for fitting the content, `-1` stands for using all the available space. Multiple columns whose width are `-1` split the available space evenly. |
-| `align` | The horizontal alignment of the contents. Available values are `left`, `center` and `right`. |
-| `sortable` | Whether the column is sortable. If the column is sortable, clicking the column header will make the column the new sort column, and if the `loadDataFunc` is specified, it will be called to get data with the new sorting options. |
-| `isRowNoColumn` | Whether the column is a row no column. If the column is a row number column, its content will be filled with the row number automatically. |
+| Property Name | Type | Description                                                  |
+| :------------ | :-- | :----------------------------------------------------------- |
+| `id`          | String | ID of the column. If `dataField` is not specified, `id` will be used as data field name to choose data to show in the column. |
+| `dataField`          | String | Field name of the data. If this is not specified, `id` will be used as the field name. |
+| `headerText` | String | The text shown on the column header. |
+| `headerTextId` | String | The string ID for localized string of the column header text. If both `headerText` and `headerTextId` are specified, `headerTextId` will be use to get localized string and `headerText` will be ignored. |
+| `width` | Integer | The width of the column in pixels. `0` stands for fitting the content, `-1` stands for using all the available space. Multiple columns whose width are `-1` split the available space evenly. |
+| `align` | String | The horizontal alignment of the contents. Available values are `left`, `center` and `right`. |
+| `sortable` | Boolean | Whether the column is sortable. If the column is sortable, clicking the column header will make the column the new sort column, and if the `loadDataFunc` is specified, it will be called to get data with the new sorting options. |
+| `isRowNoColumn` | Boolean | Whether the column is a row no column. If the column is a row number column, its content will be filled with the row number automatically. |
 
 ### `loadingDataFunction`
 
@@ -44,14 +46,14 @@ The signature of the loading function is:
 ```javascript
 function( start, recordCount, sorting, loadingDataContext, loadingDataToken, loadingDataCallback )
 ```
-| Parameter | Description |
-| :-- | : -- |
-| `start` | The index of the first row. |
-| `recordCount` | How many records to load. |
-| `sorting` | The sorting option, it has two sub fields:<br />- `sortingColumn`: The ID of the column<br />- `sortingDirection`: The direction of the sorting, `1` stands for ascending and `-1` stands for descending. |
-| `loadingDataContext` | The context data of the loading data action, for instance, the back end caches the result data and only returned part of it, the next loading action can use the context data to find the cached data. |
-| `loadingDataToken` | A later triggered loading data action may return data early. To guarantee the table only shows the data returned by the later triggered loading data action, PbTable uses a token to identify the data. The implementer just pass the token to the callback without change along with the returned data. |
-| `loadingDataCallback` | The callback function to tell PbTable the loading data result. |
+| Parameter | Type | Description |
+| :-- | : -- | : -- |
+| `start` | Integer | The index of the first row of all rows. |
+| `recordCount` | Integer | How many records to load. |
+| `sorting` | Object | The sorting option, it has two sub fields:<br />- `sortingColumn`: The ID of the column<br />- `sortingDirection`: The direction of the sorting, `1` stands for ascending and `-1` stands for descending. |
+| `loadingDataContext` | Object | The context data of the loading data action, for instance, the back end caches the result data and only returned part of it, the next loading action can use the context data to find the cached data. |
+| `loadingDataToken` | Object | A later triggered loading data action may return data early. To guarantee the table only shows the data returned by the later triggered loading data action, `PbTable` uses a token to identify the data. The implementer just pass the token to the callback without change along with the returned data. |
+| `loadingDataCallback` | Function | The callback function to tell `PbTable` the loading data result. |
 
 The signature of the loading data callback is:
 
@@ -66,7 +68,7 @@ where `data` has following fields:
     loadingDataToken: ...,   // the loading data token passed to the loading data function
     loadingDataContext: ...  // the context data of the loading data action
     totalRows: ...,          // how many row are there totally
-    rowData: ...             // array of row data
+    rowData: [...]           // array of row data
 }
 ```
 
@@ -96,21 +98,21 @@ loadJenkinsServiceBreaks: function( start, recordCount, sorting, loadingDataCont
 },
 ```
 
-### `loadingDataText` 
+### `loadingDataMessage` 
 
+The message which will be shown when loading data.
 
+### `loadingDataMessageId`
 
-### `loadingDataTextId`
+The l10n message ID of the message which will be shown when loading data.
 
+### `noContentMessage`
 
+The message which will be shown when there is no data in the table.
 
-### `noContentText`
+### `noContentMessageId`
 
-
-
-### `noContentTextId`
-
-
+The l10n message ID of the message which will be shown when there is no data in the table.
 
 ### `contextMenu`
 
