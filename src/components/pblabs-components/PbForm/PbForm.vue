@@ -5,10 +5,16 @@
                 <td class="field-label">{{ item.label }}</td>
                 <td style="width: 20px;"></td>
                 <td class="field-value-container">
-                    <div v-if="item.type == 'StaticText'" class="field field-static-text">{{ item.value }}</div>
-                    <pb-time-picker v-else-if="item.type == 'TimePicker'" v-model="item.value" :mode="item.mode" :result-mode="item.resultMode" class="field" />
-					<input v-else-if="item.type == 'Password'" type="password" v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled" :placeholder="item.placeholder" :required="item.required">
-					<input v-else type="text" v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled" :placeholder="item.placeholder" :required="item.required">
+                    <div v-if="item.type == 'StaticText'" :ref="getRefName( itemIndex )"
+						class="field field-static-text">{{ item.value }}</div>
+                    <pb-time-picker v-else-if="item.type == 'TimePicker'" :ref="getRefName( itemIndex )"
+						v-model="item.value" :mode="item.mode" :result-mode="item.resultMode" class="field" />
+					<input v-else-if="item.type == 'Password'" :ref="getRefName( itemIndex )"
+						type="password" v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
+						:placeholder="item.placeholder" :required="item.required">
+					<input v-else type="text" :ref="getRefName( itemIndex )"
+						v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
+						:placeholder="item.placeholder" :required="item.required">
 				</td>
             </tr>
         </table>
@@ -26,6 +32,13 @@ export default {
     {
         return {}
     },
+	methods:
+	{
+		getRefName: function( fieldName )
+		{
+			return "field_" + fieldName;
+		}
+	}
 }
 </script>
 
