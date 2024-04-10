@@ -10,7 +10,7 @@
                 :style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'justify-content': column.align }"
 				@click="onColumnHeaderClicked( column )">
 				<pb-stack style="width: fit-content;">
-					<pb-stack-item :size="0">
+					<pb-stack-item :size="0" :style="{ 'text-align': column.align }">
 						<slot :name="'column_header_' + column.id" :col="column">{{ column.headerTextId ? $t( column.headerTextId ) : column.headerText }}</slot>
 					</pb-stack-item>
 					<pb-stack-item :size="0" v-if="sorting.column == column.id">
@@ -203,17 +203,19 @@ export default {
 					this.selectedRows.delete( rowData );
 				else
 					this.selectedRows.add( rowData );
+				this.focusedRow = rowIndex;
 			}
 			else if ((this.selectedRows.size == 1) && this.selectedRows.has( rowData ))
 			{
 				this.selectedRows.clear();
+				this.focusedRow = rowIndex;
 			}
 			else
 			{
 				this.selectedRows.clear();
 				this.selectedRows.add( rowData );
+				this.focusedRow = rowIndex;
 			}
-			this.focusedRow = rowIndex;
 
 			this.areAllSelected = (this.selectedRows.size == this.tableConfig.data.length);
 			if (this.$refs.selectAllCheckBox)

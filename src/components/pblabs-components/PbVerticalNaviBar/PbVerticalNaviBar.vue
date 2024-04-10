@@ -19,7 +19,7 @@
 export default {
     name: "PbVerticalNaviBar",
     props: {
-        naviItems: { type: Array, default: [] },
+        naviItems: { type: Array, default: () => [] },
 		displayIcon: { type: Boolean, default: true },
 		displayCaption: { type: Boolean, default: true },
     },

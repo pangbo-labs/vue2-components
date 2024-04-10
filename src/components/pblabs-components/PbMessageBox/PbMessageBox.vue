@@ -103,6 +103,7 @@ export default {
 }
 
 .message-text {
+	font-size: 13px;
 	line-height: 150%;
 }
 </style>
