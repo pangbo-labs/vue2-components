@@ -1,9 +1,12 @@
 <template>
 	<div>
 
-		<div class="tree-node-selectable-area" :class="{ 'tree-node-selected': node == treeComponent.selectedNode }" @click="selectThisNode()">
+		<div v-if="((treeLevel == 0) && (indexInLevel > 0)) || (treeLevel > 0)" :style="{ height: treeComponent.nodeSpacing + 'px' }" />
+
+		<div class="tree-node-selectable-area" :class="{ 'tree-node-selected': node == treeComponent.selectedNode }" :style="nodeStyle"
+			@click="selectThisNode()">
 			<pb-stack :style="{ 'padding-left': (treeLevel * treeComponent.childrenIndent) + 'px' }">
-				<pb-stack-item :size="treeComponent.expandButtonSize">
+				<pb-stack-item v-if="nodeStyle.showExpandButton" :size="treeComponent.expandButtonSize">
 					<div v-if="nodeData.children && nodeData.children.length" class="tree-node-expand-button" @click="toggleExpanded()">
 						<svg aria-hidden="true" focusable="false" role="img"
 							viewBox="0 0 12 12" width="12" height="12" fill="currentColor"
@@ -13,13 +16,13 @@
 						</svg>
 					</div>
 				</pb-stack-item>
-				<pb-stack-item :size="treeComponent.expandButtonSpacing"></pb-stack-item>
+				<pb-stack-item v-if="nodeStyle.showExpandButton" :size="treeComponent.expandButtonSpacing"></pb-stack-item>
 				<pb-stack-item :size="0">
 					<div @dblclick="toggleExpanded()">
 						<pb-stack>
 							<pb-stack-item :size="0">
-								<i v-if="treeComponent.showIcon && nodeData.icon" class="material-symbols material-symbols-rounded tree-node-icon"
-									:style="{ 'font-size': treeComponent.iconSize + 'px', 'margin-right': treeComponent.iconSpacing + 'px' }">
+								<i v-if="nodeStyle.showIcon && nodeData.icon" class="material-symbols material-symbols-rounded tree-node-icon"
+									:style="{ 'font-size': nodeStyle.iconSize + 'px', 'margin-right': nodeStyle.iconSpacing + 'px' }">
 									{{ nodeData.icon }}
 								</i>
 							</pb-stack-item>
@@ -35,7 +38,7 @@
 		<transition name="expand">
 			<div v-show="isExpanded">
 				<pb-tree-node v-for="(item, itemIndex) in nodeData.children" :key="itemIndex"
-					:tree-component="treeComponent" :parent-node="node" :node-data="item" :tree-level="treeLevel + 1" />
+					:tree-component="treeComponent" :parent-node="node" :node-data="item" :tree-level="treeLevel + 1" :index-in-level="itemIndex" />
 			</div>
 		</transition>
 
@@ -43,6 +46,8 @@
 </template>
 
 <script>
+import CommonUtils from '../CommonUtils';
+
 export default {
 	name: "PbTreeNode",
 	props:
@@ -51,6 +56,7 @@ export default {
 		parentNode:		{ type: Object, default: () => new Object() },
 		nodeData:		{ type: Object, default: () => new Object() },
 		treeLevel:		{ type: Number, default: 0 },
+		indexInLevel:	{ type: Number, default: 0 },
 	},
 	mounted: function()
 	{
@@ -75,10 +81,32 @@ export default {
 		isExpandable: function()
 		{
 			return this.nodeData.children && (this.nodeData.children.length > 0);
-		}
+		},
+
+		nodeStyle: function()
+		{
+			let style = CommonUtils.copyObject( this.treeComponent.defaultNodeStyle );
+			CommonUtils.mergeObject( style, CommonUtils.getObjectProperty( this.treeComponent.settings, "appearance.defaultNodeStyle" ) );
+			CommonUtils.mergeObject( style, this.getLevelStyle( this.treeLevel ) );
+			return style;
+		},
 	},
 	methods:
 	{
+		getLevelStyle: function( level )
+		{
+			let levelStyleArray = CommonUtils.getObjectProperty( this.treeComponent.settings, "appearance.levelStyles" );
+			if ((levelStyleArray == undefined) || (levelStyleArray == null))
+				return null;
+			for (let i = 0; i < levelStyleArray.length; i ++)
+			{
+				let style = levelStyleArray[i];
+				if (style.level == level)
+					return style;
+			}
+			return null;
+		},
+
 		toggleExpanded: function()
 		{
 			if (this.nodeData.areChildrenLoaded && this.treeComponent.settings.callbacks.loadChildren)
@@ -91,7 +119,7 @@ export default {
 		selectThisNode: function()
 		{
 			this.treeComponent.selectNode( this.node );
-		}
+		},
 	}
 }
 </script>
@@ -114,7 +142,6 @@ export default {
 }
 
 .tree-node-selectable-area {
-	border-left: 3px solid transparent;
 	padding: 1px 5px;
 	transition: all .3s;
 }
@@ -127,7 +154,6 @@ export default {
 .tree-node-selected, .tree-node-selected:hover {
 	background: #ddd;
 	color: #000;
-	border-left: 3px solid #69f;
 }
 
 .tree-node-icon {

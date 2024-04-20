@@ -1,11 +1,12 @@
 <template>
 	<div class="pb-tree">
 		<pb-tree-node v-for="(item, itemIndex) in nodeData" :key="itemIndex"
-			:tree-component="treeComponent" :parent-node="null" :node-data="item" />
+			:tree-component="treeComponent" :parent-node="null" :node-data="item" :index-in-level="itemIndex" />
 	</div>
 </template>
 
 <script>
+import CommonUtils from '../CommonUtils';
 export default {
 	name: "PbTree",
 	props:
@@ -18,12 +19,17 @@ export default {
 		return {
 			selectedNode: null,
 
+			nodeSpacing: 2,
 			expandButtonSize: 20,
 			expandButtonSpacing: 2,
-			showIcon: true,
-			iconSize: 20,
-			iconSpacing: 4,
 			childrenIndent: 25,
+
+			defaultNodeStyle: {
+				showExpandButton: true,
+				showIcon: true,
+				iconSize: 20,
+				iconSpacing: 4,
+			},
 		}
 	},
 	computed:
@@ -41,18 +47,18 @@ export default {
 	{
 		applySettingsValues: function()
 		{
-			this.expandButtonSize = this.settings.appearance && this.settings.appearance.expandButtonSize ?
-				this.settings.appearance.expandButtonSize : this.expandButtonSize;
-			this.expandButtonSpacing = this.settings.appearance && this.settings.appearance.expandButtonSpacing ?
-				this.settings.appearance.expandButtonSpacing : this.expandButtonSpacing;
-			this.showIcon = this.settings.appearance && this.settings.appearance.showIcon ?
-				this.settings.appearance.showIcon : this.showIcon;
-			this.iconSize = this.settings.appearance && this.settings.appearance.iconSize ?
-				this.settings.appearance.iconSize : this.iconSize;
-			this.iconSpacing = this.settings.appearance && this.settings.appearance.iconSpacing ?
-				this.settings.appearance.iconSpacing : this.iconSpacing;
-			this.childrenIndent = this.settings.appearance && this.settings.appearance.childrenIndent ?
-				this.settings.appearance.childrenIndent : this.childrenIndent;
+			this.nodeSpacing = CommonUtils.getObjectPropertyWithDefault( this.settings,
+				"appearance.nodeSpacing", this.nodeSpacing );
+			this.expandButtonSize = CommonUtils.getObjectPropertyWithDefault( this.settings,
+				"appearance.expandButtonSize", this.nodeSpacing );
+			this.expandButtonSpacing = CommonUtils.getObjectPropertyWithDefault( this.settings,
+				"appearance.expandButtonSpacing", this.nodeSpacing );
+		},
+
+		getUserDefinedValue: function( object, propertyPath, defaultValue )
+		{
+			let value = CommonUtils.getObjectProperty( object, propertyPath );
+
 		},
 
 		selectNode: function( node )
