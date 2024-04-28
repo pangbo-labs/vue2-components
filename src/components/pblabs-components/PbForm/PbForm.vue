@@ -2,7 +2,7 @@
     <div style="display: flex; flex-direction: row;">
         <table cellspacing="4" style="flex: 1; width: 0;">
             <tr v-for="(item, itemIndex) in data" :key="itemIndex">
-                <td class="field-label">{{ item.label }}</td>
+                <td class="field-label">{{ item.labelId ? $t( item.labelId ) : item.label }}</td>
                 <td style="width: 20px;"></td>
                 <td class="field-value-container">
                     <div v-if="item.type == 'StaticText'" :ref="getRefName( itemIndex )"

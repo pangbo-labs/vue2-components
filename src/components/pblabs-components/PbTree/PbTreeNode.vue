@@ -4,10 +4,12 @@
 		<div v-if="((treeLevel == 0) && (indexInLevel > 0)) || (treeLevel > 0)" :style="{ height: treeComponent.nodeSpacing + 'px' }" />
 
 		<div class="tree-node-selectable-area" :class="{ 'tree-node-selected': node == treeComponent.selectedNode }" :style="nodeStyle"
-			@click="selectThisNode()">
+			@click="selectThisNode()" @dblclick="toggleExpanded()">
 			<pb-stack :style="{ 'padding-left': (treeLevel * treeComponent.childrenIndent) + 'px' }">
 				<pb-stack-item v-if="nodeStyle.showExpandButton" :size="treeComponent.expandButtonSize">
-					<div v-if="nodeData.children && nodeData.children.length" class="tree-node-expand-button" @click="toggleExpanded()">
+					<div v-if="nodeData.children && nodeData.children.length" class="tree-node-expand-button"
+						:style="{ width: treeComponent.expandButtonSize + 'px', height: treeComponent.expandButtonSize + 'px' }"
+						@click="toggleExpanded()">
 						<svg aria-hidden="true" focusable="false" role="img"
 							viewBox="0 0 12 12" width="12" height="12" fill="currentColor"
 							class="tree-node-expand-button-icon"
@@ -18,7 +20,7 @@
 				</pb-stack-item>
 				<pb-stack-item v-if="nodeStyle.showExpandButton" :size="treeComponent.expandButtonSpacing"></pb-stack-item>
 				<pb-stack-item :size="0">
-					<div @dblclick="toggleExpanded()">
+					<div>
 						<pb-stack>
 							<pb-stack-item :size="0">
 								<i v-if="nodeStyle.showIcon && nodeData.icon" class="material-symbols material-symbols-rounded tree-node-icon"
@@ -129,6 +131,7 @@ export default {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	align-items: center;
 	cursor: default;
 	user-select: none;
 	transition: all .3s;
@@ -142,7 +145,7 @@ export default {
 }
 
 .tree-node-selectable-area {
-	padding: 1px 5px;
+	padding: 2px 4px;
 	transition: all .3s;
 }
 
@@ -162,6 +165,9 @@ export default {
 }
 
 .tree-node-text {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 	padding: 0px 0px;
 	cursor: default;
 	user-select: none;

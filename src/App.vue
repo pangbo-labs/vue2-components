@@ -20,7 +20,8 @@ export default {
 		return {
 			naviItems: [
 				{ caption: "Home", icon: "home", routePath: "/" },
-				{ caption: "Users", icon: "group", routePath: "/users" },
+				{ caption: "Documentation", icon: "description", routePath: "/documentation" },
+				{ caption: "Samples", icon: "home", routePath: "/samples" },
 				{ caption: "Configuration", icon: "settings", routePath: "/configuration" },
 				{ caption: "Logs", icon: "description", routePath: "/logs" },
 			],

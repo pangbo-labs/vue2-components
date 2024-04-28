@@ -22,7 +22,7 @@ export default {
 			nodeSpacing: 2,
 			expandButtonSize: 20,
 			expandButtonSpacing: 2,
-			childrenIndent: 25,
+			childrenIndent: 18,
 
 			defaultNodeStyle: {
 				showExpandButton: true,
@@ -50,9 +50,9 @@ export default {
 			this.nodeSpacing = CommonUtils.getObjectPropertyWithDefault( this.settings,
 				"appearance.nodeSpacing", this.nodeSpacing );
 			this.expandButtonSize = CommonUtils.getObjectPropertyWithDefault( this.settings,
-				"appearance.expandButtonSize", this.nodeSpacing );
+				"appearance.expandButtonSize", this.expandButtonSize );
 			this.expandButtonSpacing = CommonUtils.getObjectPropertyWithDefault( this.settings,
-				"appearance.expandButtonSpacing", this.nodeSpacing );
+				"appearance.expandButtonSpacing", this.expandButtonSpacing );
 		},
 
 		getUserDefinedValue: function( object, propertyPath, defaultValue )

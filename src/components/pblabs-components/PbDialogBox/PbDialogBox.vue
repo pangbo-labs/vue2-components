@@ -1,10 +1,10 @@
 <template>
 	<div class="modal-mask" v-if="showDialog" @keydown.esc="onEscKeyDown">
         <div class="dialog-box-wrapper" ref="dialogBoxFrame">
-            <div class="dialog-box-body" :style="{ width: (width > 0) ? width + 'px' : (dialogBoxConfig.width > 0 ? dialogBoxConfig.width : DEFAULT_WIDTH) + 'px' }">
+            <div class="dialog-box-body" :style="{ width: (width > 0) ? width + 'px' : (settings.width > 0 ? settings.width : DEFAULT_WIDTH) + 'px' }">
                 <div class="title-bar" @mousedown="onTitleBarMouseDown">
 					<pb-stack :item-spacing="20">
-						<pb-stack-item class="title-text">{{ title ? title : dialogBoxConfig.title }}</pb-stack-item>
+						<pb-stack-item class="title-text">{{ _title }}</pb-stack-item>
 						<pb-stack-item :size="0">
 							<div class="control-button" @click="cancelDialog()">✕</div>
 						</pb-stack-item>
@@ -15,7 +15,7 @@
                     <slot name="contents"></slot>
                 </div>
                 <div style="height: 0px; border-top: 1px solid #d6d6d6;"></div>
-                <pb-stack v-if="this.dialogBoxConfig && !this.dialogBoxConfig.noButtonBar" :item-spacing="30" class="button-bar">
+                <pb-stack v-if="this.settings && !this.settings.noButtonBar" :item-spacing="30" class="button-bar">
 					<pb-stack-item>
 						<!-- <pb-button style="margin-right: 6px;">Help</pb-button> -->
 					</pb-stack-item>
@@ -37,11 +37,12 @@ export default {
     name: "PbDialogBox",
 
     props: {
-        dialogBoxConfig:    { type: Object, default: null },
-        showDialog:         { type: Boolean, default: false },
-        title:				{ type: String, default: null },
-        width:				{ type: Number, default: 0 },
-        height:				{ type: Number, default: 0 },
+		settings:	{ type: Object, default: null },
+		showDialog:	{ type: Boolean, default: false },
+		title:		{ type: String, default: null },
+		titleId:	{ type: String, default: null },
+		width:		{ type: Number, default: 0 },
+		height:		{ type: Number, default: 0 },
     },
     
     data: function() {
@@ -53,8 +54,9 @@ export default {
             mouseX: 0,
             mouseY: 0,
 
-            defaultDialogBoxConfig: {
+            defaultsettings: {
                 title: "",
+				titleId: "",
                 width: 600,
                 height: 0,
                 buttons: [
@@ -70,12 +72,25 @@ export default {
 
     computed:
     {
+		_title: function()
+		{
+			if (this.titleId)
+				return this.$t( this.titleId );
+			else if (this.title)
+				return this.title;
+			if (this.settings.titleId)
+				return this.$t( this.settings.titleId );
+			else
+				return this.settings.title;
+			return "";
+		},
+
         buttons: function()
         {
-			if (!this.dialogBoxConfig)
+			if (!this.settings)
 				return [];
 
-            return this.dialogBoxConfig.buttons ? this.dialogBoxConfig.buttons : this.defaultDialogBoxConfig.buttons;
+            return this.settings.buttons ? this.settings.buttons : this.defaultsettings.buttons;
         }
     },
     
