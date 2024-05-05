@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import DocumentationHome from '../views/documentation/DocumentationHome.vue'
+import DocHome from '../views/docs/DocHome.vue'
+import PbButtonDoc from '../views/docs/docs/PbButtonDoc.vue'
+import PbTableDoc from '../views/docs/docs/PbTableDoc.vue'
+import PbTreeDoc from '../views/docs/docs/PbTreeDoc.vue'
+import PbFormDoc from '../views/docs/docs/PbFormDoc.vue'
+import PbDialogBoxDoc from '../views/docs/docs/PbDialogBoxDoc.vue'
 import SamplesHome from '../views/samples/SamplesHome.vue'
 
 Vue.use(VueRouter)
@@ -13,9 +18,36 @@ const routes = [
 		component: Home
 	},
 	{
-		path: '/documentation',
-		name: 'DocumentationHome',
-		component: DocumentationHome
+		path: '/docs',
+		name: 'DocHome',
+		component: DocHome,
+		children: [
+			{
+				path: 'pb-button',
+				name: 'PbButtonDoc',
+				component: PbButtonDoc
+			},
+			{
+				path: 'pb-table',
+				name: 'PbTableDoc',
+				component: PbTableDoc
+			},
+			{
+				path: 'pb-tree',
+				name: 'PbTreeDoc',
+				component: PbTreeDoc
+			},
+			{
+				path: 'pb-form',
+				name: 'PbFormDoc',
+				component: PbFormDoc
+			},
+			{
+				path: 'pb-dialog-box',
+				name: 'PbDialogBoxDoc',
+				component: PbDialogBoxDoc
+			},
+		],
 	},
 	{
 		path: '/samples',
