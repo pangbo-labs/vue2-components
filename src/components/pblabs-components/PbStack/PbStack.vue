@@ -23,7 +23,7 @@ export default {
 		containerStyle: function()
 		{
 			return {
-				flexDirection: this.direction == "Horizontal" ? "row" : column,
+				flexDirection: this.direction == "Horizontal" ? "row" : "column",
 				padding: this.padding,
 				alignItems: (this.direction == "Horizontal" && this.alignItems) ? this.alignItems : "",
 				justifyContent: (this.direction != "Horizontal" && this.alignItems) ? this.alignItems : "",

@@ -23,21 +23,23 @@
         <div ref="tableBody" class="pb-table-body" @scroll="onScroll">
 			<div v-if="showMessage" class="pb-table-message" v-html="message"></div>
 			<div v-else>
-				<div v-for="(row, rowIndex) in tableConfig.data" :key="rowIndex" class="pb-table-data-row" :ref="makeRowRef( rowIndex )"
-					:class="{ 'pb-table-data-row-selected': selectedRows.has( row ) }"
-					@mousedown="onRowMouseDown( rowIndex, row, $event )"
-					@click="$emit( 'row-clicked', row )"
-					@dblclick="$emit( 'row-double-clicked', row )"
-					@contextmenu="onTableRowRightClicked( row, $event )">
-					<div v-if="tableConfig.showRowCheckBox" class="pb-table-header-cell" style="flex: 0; width: 40; justify-content: center;">
-						<i v-if="selectedRows.has( row )" ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box</i>
-						<i v-else ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box_outline_blank</i>
-						<!-- <input type="checkbox" :checked="selectedRows.has( row )" @change="onRowCheckBoxClicked( row, $event )"> -->
-					</div>
-					<div class="pb-table-data-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
-						:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align, 'user-select': column.allowSelectContents ? 'auto' : 'none' }"
-						@click="$emit( 'data-cell-clicked', row, column )">
-						<slot :name="'column_data_' + column.id" :row="row" :col="column">{{ column.isRowNoColumn ? (rowIndex + 1) : row[column.id] }}</slot>
+				<div v-for="(row, rowIndex) in tableConfig.data" :key="rowIndex">
+					<div v-if="!tableConfig.filterMethord || tableConfig.filterMethord( row )" class="pb-table-data-row" :ref="makeRowRef( rowIndex )"
+						:class="{ 'pb-table-data-row-selected': selectedRows.has( row ) }"
+						@mousedown="onRowMouseDown( rowIndex, row, $event )"
+						@click="$emit( 'row-clicked', row )"
+						@dblclick="$emit( 'row-double-clicked', row )"
+						@contextmenu="onTableRowRightClicked( row, $event )">
+						<div v-if="tableConfig.showRowCheckBox" class="pb-table-header-cell" style="flex: 0; width: 40; justify-content: center;">
+							<i v-if="selectedRows.has( row )" ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box</i>
+							<i v-else ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box_outline_blank</i>
+							<!-- <input type="checkbox" :checked="selectedRows.has( row )" @change="onRowCheckBoxClicked( row, $event )"> -->
+						</div>
+						<div class="pb-table-data-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
+							:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align, 'user-select': column.allowSelectContents ? 'auto' : 'none' }"
+							@click="$emit( 'data-cell-clicked', row, column )">
+							<slot :name="'column_data_' + column.id" :row="row" :col="column">{{ column.isRowNoColumn ? (rowIndex + 1) : row[column.id] }}</slot>
+						</div>
 					</div>
 				</div>
 				<div v-if="isLoadingData" class="pb-table-message">Loading...</div>

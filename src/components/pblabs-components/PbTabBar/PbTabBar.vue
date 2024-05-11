@@ -4,7 +4,7 @@
 			<div v-for="(item, itemIndex) in tabs" :key="itemIndex"
 				class="tab-button" :class="{ 'tab-button-current': itemIndex == currentItem }"
 				@click="setCurrentTab( itemIndex )">
-				<div :ref="makeTabButtonRef( itemIndex )">{{ item.text }}</div>
+				<div :ref="makeTabButtonRef( itemIndex )">{{ item.textId ? $t( item.textId ) : item.text }}</div>
 			</div>
 		</div>
 		<div ref="currentIndicator" class="current-indicator"></div>
