@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
 	<div>
 		<div style="border: 1px solid #ccc; border-radius: 3px; padding: 4px 8px;">

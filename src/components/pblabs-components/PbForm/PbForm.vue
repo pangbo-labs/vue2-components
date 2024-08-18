@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
     <div style="display: flex; flex-direction: row;">
         <table cellspacing="4" style="flex: 1; width: 0;">

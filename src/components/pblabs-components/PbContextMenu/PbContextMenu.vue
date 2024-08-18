@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
 	<div ref="contextMenu" class="context-menu" :style="{ 'visibility': isContextMenuVisible ? 'visible' : 'hidden' }">
 		<div class="dropdown-menu">

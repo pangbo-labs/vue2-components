@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
 	<pb-tooltip-anchor style="display: inline-block;">
 		<button :class="[ customClass ? customClass : 'pb-button', { 'default-button': isDefault, 'disabled-button': isDisabled } ]"

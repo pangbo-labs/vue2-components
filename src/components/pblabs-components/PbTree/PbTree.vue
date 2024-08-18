@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
 	<div class="pb-tree">
 		<pb-tree-node v-for="(item, itemIndex) in nodeData" :key="itemIndex"

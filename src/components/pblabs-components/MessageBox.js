@@ -1,3 +1,7 @@
+/*
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+*/
 
 import PbMessageBox from "./PbMessageBox/PbMessageBox.vue"
 

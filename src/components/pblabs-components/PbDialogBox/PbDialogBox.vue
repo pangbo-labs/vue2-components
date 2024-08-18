@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
 	<div class="modal-mask" v-if="showDialog" @keydown.esc="onEscKeyDown">
         <div class="dialog-box-wrapper" ref="dialogBoxFrame">

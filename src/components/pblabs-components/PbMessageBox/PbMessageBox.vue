@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
     <pb-dialog-box :show-dialog.sync="dialogBoxConfig.isVisible" :settings="dialogBoxConfig"
 		@ok-button-clicked="onOkButtonClicked" @cancel-button-clicked="onCancelButtonClicked">

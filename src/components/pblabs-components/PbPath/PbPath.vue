@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
     <div>
         <div v-for="(item, itemIndex) in pathComponents" :key="itemIndex" style="display: inline-block;">

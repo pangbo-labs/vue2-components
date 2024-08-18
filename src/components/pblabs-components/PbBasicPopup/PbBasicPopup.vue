@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
 	<div v-show="isPopupVisible" ref="popup" class="basic-popup">
 		<slot>This is the basic popup.</slot>

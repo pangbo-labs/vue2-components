@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
     <div class="navi-bar">
         <div v-for="(item, itemIndex) in naviItems" :key="itemIndex" class="navi-item"

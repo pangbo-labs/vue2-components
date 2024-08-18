@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
 	<div class="tooltip" :style="{ 'max-width': maxWidth + 'px' }" >
         <slot></slot>

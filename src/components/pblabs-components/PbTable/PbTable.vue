@@ -1,3 +1,8 @@
+<!--
+Written by Bo Pang.
+Copyright (C) PBLabs 2021. All rights reserved.
+-->
+
 <template>
     <div class="pb-table">
         <div ref="tableHead" class="pb-table-header-row">
