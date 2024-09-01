@@ -1,6 +1,9 @@
 <!--
-Written by Bo Pang.
-Copyright (C) PBLabs 2021. All rights reserved.
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+Repository location: https://github.com/pangbo-labs/vue2-components
 -->
 
 <template>
@@ -17,6 +20,9 @@ Copyright (C) PBLabs 2021. All rights reserved.
 					<input v-else-if="item.type == 'Password'" :ref="getRefName( itemIndex )"
 						type="password" v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
 						:placeholder="item.placeholder" :required="item.required">
+					<select v-else-if="item.type == 'Select'" v-model="item.value" :placeholder="item.placeholder" class="field field-select">
+						<option v-for="(option, optionIndex) in item.options" :key="optionIndex" :value="option.value" :label="option.label" class="field field-option"></option>
+					</select>
 					<input v-else type="text" :ref="getRefName( itemIndex )"
 						v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
 						:placeholder="item.placeholder" :required="item.required">
@@ -65,11 +71,15 @@ export default {
 
 .field {
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 4px;
     padding: 6px 8px;
     box-sizing: border-box;
     line-height: 140%;
     color: #333;
+}
+
+.field:focus {
+	outline: none;
 }
 
 .field-static-text {
@@ -90,5 +100,21 @@ export default {
 
 .field-input::placeholder {
     opacity: 0.5;
+}
+
+.field-select {
+	color: #333;
+}
+
+.field-option {
+	background: #fff;
+}
+</style>
+
+<style>
+select option {
+	background: #fff;
+	padding: 0 0;
+	color: red;
 }
 </style>

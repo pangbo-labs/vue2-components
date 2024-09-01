@@ -1,6 +1,9 @@
 <!--
-Written by Bo Pang.
-Copyright (C) PBLabs 2021. All rights reserved.
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+Repository location: https://github.com/pangbo-labs/vue2-components
 -->
 
 <template>
@@ -41,7 +44,7 @@ Copyright (C) PBLabs 2021. All rights reserved.
 							<!-- <input type="checkbox" :checked="selectedRows.has( row )" @change="onRowCheckBoxClicked( row, $event )"> -->
 						</div>
 						<div class="pb-table-data-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
-							:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align, 'user-select': column.allowSelectContents ? 'auto' : 'none' }"
+							:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align, 'user-select': column.allowSelectContents ? 'auto' : 'none', 'word-break': column.wordBreak ? column.wordBreak : ''  }"
 							@click="$emit( 'data-cell-clicked', row, column )">
 							<slot :name="'column_data_' + column.id" :row="row" :col="column">{{ column.isRowNoColumn ? (rowIndex + 1) : row[column.id] }}</slot>
 						</div>

@@ -1,6 +1,9 @@
 /*
-Written by Bo Pang.
-Copyright (C) PBLabs 2021. All rights reserved.
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+Repository location: https://github.com/pangbo-labs/vue2-components
 */
 
 import CommonUtils from './CommonUtils.js'
