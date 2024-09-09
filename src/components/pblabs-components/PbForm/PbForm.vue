@@ -10,9 +10,12 @@ Repository location: https://github.com/pangbo-labs/vue2-components
     <div style="display: flex; flex-direction: row;">
         <table cellspacing="4" style="flex: 1; width: 0;">
             <tr v-for="(item, itemIndex) in data" :key="itemIndex">
-                <td class="field-label">{{ item.labelId ? $t( item.labelId ) : item.label }}</td>
-                <td style="width: 20px;"></td>
-                <td class="field-value-container">
+				<td v-if="item.type == 'Separator'" colspan="3">
+					<div style="height: 8px;"></div>
+				</td>
+                <td v-if="item.type != 'Separator'" class="field-label">{{ item.labelId ? $t( item.labelId ) : item.label }}</td>
+                <td v-if="item.type != 'Separator'" style="width: 20px;"></td>
+                <td v-if="item.type != 'Separator'" class="field-value-container">
                     <div v-if="item.type == 'StaticText'" :ref="getRefName( itemIndex )"
 						class="field field-static-text">{{ item.value }}</div>
                     <pb-time-picker v-else-if="item.type == 'TimePicker'" :ref="getRefName( itemIndex )"
@@ -23,6 +26,10 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 					<select v-else-if="item.type == 'Select'" v-model="item.value" :placeholder="item.placeholder" class="field field-select">
 						<option v-for="(option, optionIndex) in item.options" :key="optionIndex" :value="option.value" :label="option.label" class="field field-option"></option>
 					</select>
+					<textarea v-else-if="item.type == 'TextArea'" :ref="getRefName( itemIndex )"
+						v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
+						:placeholder="item.placeholder" :required="item.required" :style="{ 'height': item.height ? item.height : 'auto' }">
+					</textarea>
 					<input v-else type="text" :ref="getRefName( itemIndex )"
 						v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
 						:placeholder="item.placeholder" :required="item.required">

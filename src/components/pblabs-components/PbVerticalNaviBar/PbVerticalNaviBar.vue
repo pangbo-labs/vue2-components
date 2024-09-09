@@ -13,7 +13,7 @@ Repository location: https://github.com/pangbo-labs/vue2-components
             @click="onNaviItemClicked( itemIndex )">
 			<i v-if="displayIcon" class="material-symbols material-symbols-rounded" style="font-size: 28px; font-variation-settings: 'wght' 300;">{{ item.icon }}</i>
             <transition name="el-fade-in-linear">
-                <div v-if="displayCaption" class="navi-item-caption">{{ item.caption }}</div>
+                <div v-if="displayCaption" class="navi-item-caption">{{ item.captionId ? $t( item.captionId ) : item.caption }}</div>
             </transition>
         </div>
         <div class="toggle-button" style="margin-top: 50px;" @click="toggleDisplayCaption()">
@@ -27,25 +27,105 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 export default {
     name: "PbVerticalNaviBar",
     props: {
-        naviItems: { type: Array, default: () => [] },
-		displayIcon: { type: Boolean, default: true },
-		displayCaption: { type: Boolean, default: true },
+        naviItems:		{ type: Array, default: () => [] },
+		parentPath:		{ type: String, default: "" },
+		displayIcon:	{ type: Boolean, default: true },
+		displayCaption:	{ type: Boolean, default: true },
     },
     data: function() {
         return {
-            currentItemIndex: 0,
+			currentItemIndex: 0,
         }
     },
+	mounted: function()
+	{
+		console.log( `PbVerticalNaviBar.mounted(): route path: ${this.$route.path}` );
+		let routePath = this.combinePaths( this.$route.path, "" ); // add '/' to the path
+		let itemIndex = 0;
+		let matchedIndex = -1;
+		let matchedNaviItemPath = null;
+		for (let item of this.naviItems)
+		{
+			let naviItemPath = this.combinePaths( this.parentPath, item.routePath, "" );
+			if (routePath.startsWith( naviItemPath ))
+			{
+				console.log( `matchedNaviItemPath: '${matchedNaviItemPath}'` );
+				if ((matchedIndex < 0) || (naviItemPath.length > matchedNaviItemPath.length))
+				{
+					matchedIndex = itemIndex;
+					matchedNaviItemPath = naviItemPath;
+				}
+			}
+			itemIndex ++;
+		};
+		this.currentItemIndex = matchedIndex;
+	},
 	methods: {
 
-		onNaviItemClicked: function( index ) {
+		setCurrentItem: function( itemIndex )
+		{
+			this.currentItemIndex = itemIndex;
+		},
+
+		navigate: function( itemIndex )
+		{
+			this.onNaviItemClicked( itemIndex );
+		},
+
+		onNaviItemClicked: function( index )
+		{
+			if (!this.naviItems[index].routePath)
+				return;
 			this.currentItemIndex = index;
 			var currentItem = this.naviItems[this.currentItemIndex];
-			this.$router.push( currentItem.routePath );
+			this.$router.push( this.combineRelativePath( this.parentPath, currentItem.routePath ) );
+		},
+
+		combineRelativePath: function( parentPath, childPath )
+		{
+			if (!parentPath || !parentPath.trim())
+				return childPath;
+			if (childPath.startsWith( "/" ))
+				return childPath;
+			let tempPath = parentPath.trim();
+			if (!tempPath.endsWith( "/" ))
+				tempPath += "/";
+			return tempPath + childPath;
 		},
 
 		toggleDisplayCaption: function() {
 			this.displayCaption = !this.displayCaption;
+		},
+
+		setCurrentItemByRoutePath: function( routePath )
+		{
+			let itemIndex = this.findIndexByRoutePath( routePath );
+			if (itemIndex >= 0)
+				this.currentItemIndex = itemIndex;
+		},
+
+		findIndexByRoutePath: function( routePath )
+		{
+			for (var i = 0; i < this.naviItems.length; i ++)
+			{
+				if (this.naviItems[i].routePath == routePath)
+					return i;
+			}
+			return -1;
+		},
+
+		combinePaths: function( paths )
+		{
+			let result = "";
+			let pathIndex = 0;
+			for (let path of arguments)
+			{
+				if ((pathIndex > 0) && !result.endsWith( "/" ))
+					result += "/";
+				result = path.startsWith( "/" ) ? path : result + path;
+				pathIndex ++;
+			}
+			return result;
 		}
 	}
 }
@@ -80,6 +160,7 @@ export default {
 	font-weight: 500;
 	line-height: 150%;
 	margin-left: 10px;
+	margin-right: 2px;
 }
 
 .navi-item + .navi-item {

@@ -7,7 +7,7 @@
 						<i class="material-symbols material-symbols-rounded" style="font-size: 28px; font-variation-settings: 'wght' 300;">account_circle</i>
 					</div>
 				</div>
-				<PbVerticalNaviBar :navi-items="naviItems" :display-caption="false" style="position: sticky; top: 0px;" />
+				<PbVerticalNaviBar :navi-items="naviItems" :display-caption="false" parent-path="/" style="position: sticky; top: 0px;" />
 			</div>
 			<router-view style="flex: 1; width: 0;" />
 		</div>

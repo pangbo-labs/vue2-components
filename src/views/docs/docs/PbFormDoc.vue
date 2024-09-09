@@ -50,13 +50,16 @@ export default {
 			currentTabPage: 'overview',
 
 			theForm: {
-				userName: { label: "User name:", value: "", placeholder: "Please input the user name" },
-				password: { label: "Password:", type: "Password", value: "",  placeholder: "Please input the password" },
-				userType: { label: "User type:", type: "Select", value: "LocalUser",  placeholder: "Please input the user type",
-							options: [
-								{ value: "LocalUser", label: "Local User" },
-								{ value: "DomainUser", label: "Domain User" },
-							] },
+				userName:		{ label: "User name:", value: "", placeholder: "Please input the user name" },
+				password:		{ label: "Password:", type: "Password", value: "",  placeholder: "Please input the password" },
+				separator:		{ type: "Separator" },
+				userType:		{ label: "User type:", type: "Select", value: "LocalUser",  placeholder: "Please input the user type",
+									options: [
+										{ value: "LocalUser", label: "Local User" },
+										{ value: "DomainUser", label: "Domain User" },
+									] },
+				email:			{ label: "Mail:" },
+				description:	{ label: "Description", type: "TextArea" },
 			},
 
 			propertyTable: {
