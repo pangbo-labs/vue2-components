@@ -12,7 +12,7 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 			<div v-for="(item, itemIndex) in tabs" :key="itemIndex"
 				class="tab-button" :class="{ 'tab-button-current': itemIndex == currentItem }"
 				@click="setCurrentTab( itemIndex )">
-				<div :ref="makeTabButtonRef( itemIndex )">{{ item.textId ? $t( item.textId ) : item.text }}</div>
+				<div :ref="makeTabButtonRef( itemIndex )" class="tab-button-text">{{ item.textId ? $t( item.textId ) : item.text }}</div>
 			</div>
 		</div>
 		<div ref="currentIndicator" class="current-indicator"></div>
@@ -83,9 +83,13 @@ export default {
 .tab-button {
 	display: inline-block;
 	padding: 8px 16px;
-	font-size: 16px;
 	cursor: default;
 	user-select: none;
+}
+
+.tab-button-text {
+	font-size: 16px;
+	color: inherit;
 }
 
 .tab-button-current {

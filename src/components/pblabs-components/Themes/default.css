@@ -9,20 +9,21 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 
 :root {
     --font-family: Segoe UI, Rototo, Avenir, Helvetica, Arial, Noto Sans SC, Microsoft Yahei, sans-serif;
+	--font-weight: normal;
     --text-size: 13px;
     --line-height: 175%;
     --line-height-compact: 140%;
-    --text-color: #37352f;
+    --text-color: #444;
     --small-text-size: 12px;
 
     --primary-color: #c33;
     /* --secondary-color: #fa3; */
     --secondary-color: #69c;
 
-    --selected-background: #ccc;
-    --selected-text-color: var(--text-color);
+    --selected-background-color: rgba( 0, 0, 0, 0.3 );
+    --selected-text-color: #fff;
     --selected-text-weight: normal;
-    --hovered-background: #ecf5ff;
+    --hovered-background-color: rgba( 0, 0, 0, 0.1 );
     --hovered-text-color: var(--text-color); /* #66b1ff; */
     --hovered-text-weight: normal;
 
@@ -57,5 +58,21 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 	--PbTable-dataRow-borderBottom: 1px solid #eee;
 	--PbTable-dataRow-hover-background: #f9f9f9;
 	--PbTable-dataRow-selected-background: #eeeef9;
+}
+
+body, div, th, td, p, li, dt, dd, input, textarea {
+	font-family: Segoe UI, Rototo, Avenir, Helvetica, Arial, Noto Sans SC, Microsoft Yahei, sans-serif;
+	font-size: 13px;
+	color: #333;
+}
+
+.item-active {
+	background: #c33;
+	color: #333;
+}
+
+.item-hover {
+	background: rgba( 0, 0, 0, 0.08 );
+	color: #333;
 }
 

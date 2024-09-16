@@ -140,9 +140,10 @@ export default {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	border-radius: 3px;
+	border-radius: 5px;
 	padding: 6px 8px;
-	color: #444;
+	color: var(--text-color);
+	font-weight: var(--text-weight);
 	text-align: left;
 	cursor: default;
 	user-select: none;
@@ -150,8 +151,9 @@ export default {
 }
 
 .navi-item:hover {
-	background: var(--primary-color);
-	color: #fff;
+	background: var(--hovered-background-color);
+	color: var(--hovered-text-color);
+	font-weight: var(--hovered-text-weight);
 	transition: all .3s;
 }
 
@@ -168,8 +170,9 @@ export default {
 }
 
 .navi-item-current, .navi-item-current:hover {
-	background: #e9e9e9;
-	color: #333;
+	background: var(--primary-color);
+	color: var(--selected-text-color);
+	font-weight: var(--selected-text-weight);
 	transition: all .3s;
 }
 
