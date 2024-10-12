@@ -163,8 +163,8 @@ export default {
 }
 
 .tree-node-selected, .tree-node-selected:hover {
-	background: #ddd;
-	color: #000;
+	background: var(--selected-background-color);
+	color: var(--selected-text-color);
 }
 
 .tree-node-icon {
@@ -177,6 +177,7 @@ export default {
 	flex-direction: row;
 	align-items: center;
 	padding: 0px 0px;
+	color: inherit;
 	cursor: default;
 	user-select: none;
 }

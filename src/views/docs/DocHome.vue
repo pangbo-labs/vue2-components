@@ -82,6 +82,10 @@ export default {
 								routePath: "pb-form"
 							},
 							{
+								text: "List",
+								routePath: "pb-list"
+							},
+							{
 								text: "Context Menu",
 								routePath: "pb-context-menu"
 							},

@@ -19,20 +19,25 @@ Repository location: https://github.com/pangbo-labs/vue2-components
                     <div v-if="item.type == 'StaticText'" :ref="getRefName( itemIndex )"
 						class="field field-static-text">{{ item.value }}</div>
                     <pb-time-picker v-else-if="item.type == 'TimePicker'" :ref="getRefName( itemIndex )"
-						v-model="item.value" :mode="item.mode" :result-mode="item.resultMode" class="field" />
+						v-model="item.value" :mode="item.mode" :result-mode="item.resultMode" class="field"
+						@change="if (item.onChange) item.onChange( $event );" />
 					<input v-else-if="item.type == 'Password'" :ref="getRefName( itemIndex )"
 						type="password" v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
-						:placeholder="item.placeholder" :required="item.required">
-					<select v-else-if="item.type == 'Select'" v-model="item.value" :placeholder="item.placeholder" class="field field-select">
+						:placeholder="item.placeholder" :required="item.required"
+						@change="if (item.onChange) item.onChange( $event );">
+					<select v-else-if="item.type == 'Select'" v-model="item.value" :placeholder="item.placeholder" class="field field-select"
+						@change="if (item.onChange) item.onChange( $event );">
 						<option v-for="(option, optionIndex) in item.options" :key="optionIndex" :value="option.value" :label="option.label" class="field field-option"></option>
 					</select>
 					<textarea v-else-if="item.type == 'TextArea'" :ref="getRefName( itemIndex )"
 						v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
-						:placeholder="item.placeholder" :required="item.required" :style="{ 'height': item.height ? item.height : 'auto' }">
+						:placeholder="item.placeholder" :required="item.required" :style="{ 'height': item.height ? item.height : 'auto' }"
+						@change="if (item.onChange) item.onChange( $event );">
 					</textarea>
 					<input v-else type="text" :ref="getRefName( itemIndex )"
 						v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
-						:placeholder="item.placeholder" :required="item.required">
+						:placeholder="item.placeholder" :required="item.required"
+						@change="if (item.onChange) item.onChange( $event );">
 				</td>
             </tr>
         </table>

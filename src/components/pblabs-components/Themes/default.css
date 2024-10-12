@@ -20,8 +20,8 @@ Repository location: https://github.com/pangbo-labs/vue2-components
     /* --secondary-color: #fa3; */
     --secondary-color: #69c;
 
-    --selected-background-color: rgba( 0, 0, 0, 0.3 );
-    --selected-text-color: #fff;
+    --selected-background-color: #ddd; /* rgba( 0, 0, 0, 0.3 ) */;
+    --selected-text-color: var(--text-color);
     --selected-text-weight: normal;
     --hovered-background-color: rgba( 0, 0, 0, 0.1 );
     --hovered-text-color: var(--text-color); /* #66b1ff; */

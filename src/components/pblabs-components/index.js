@@ -34,6 +34,8 @@ import PbTreeNode from './PbTree/PbTreeNode.vue'
 import PbTree from './PbTree/PbTree.vue'
 import PbSwitch from './PbSwitch/PbSwitch.vue'
 import PbMarkdown from './PbMarkdown/PbMarkdown.vue'
+import PbList from './PbList/PbList.vue'
+import PbImage from './PbImage/PbImage.vue'
 
 import MessageBox from "./MessageBox.js"
 
@@ -62,6 +64,8 @@ const components = [
 	PbTree,
 	PbSwitch,
 	PbMarkdown,
+	PbList,
+	PbImage,
 ];
 
 const PbComponentStyles = {

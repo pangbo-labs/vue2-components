@@ -161,6 +161,7 @@ export default {
 	font-size: 13px;
 	font-weight: 500;
 	line-height: 150%;
+	color: inherit;
 	margin-left: 10px;
 	margin-right: 2px;
 }
@@ -171,7 +172,7 @@ export default {
 
 .navi-item-current, .navi-item-current:hover {
 	background: var(--primary-color);
-	color: var(--selected-text-color);
+	color: #fff;
 	font-weight: var(--selected-text-weight);
 	transition: all .3s;
 }

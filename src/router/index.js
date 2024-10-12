@@ -6,6 +6,7 @@ import PbButtonDoc from '../views/docs/docs/PbButtonDoc.vue'
 import PbTableDoc from '../views/docs/docs/PbTableDoc.vue'
 import PbTreeDoc from '../views/docs/docs/PbTreeDoc.vue'
 import PbFormDoc from '../views/docs/docs/PbFormDoc.vue'
+import PbListDoc from '../views/docs/docs/PbListDoc.vue'
 import PbDialogBoxDoc from '../views/docs/docs/PbDialogBoxDoc.vue'
 import SamplesHome from '../views/samples/SamplesHome.vue'
 
@@ -41,6 +42,11 @@ const routes = [
 				path: 'pb-form',
 				name: 'PbFormDoc',
 				component: PbFormDoc
+			},
+			{
+				path: 'pb-list',
+				name: 'PbListDoc',
+				component: PbListDoc
 			},
 			{
 				path: 'pb-dialog-box',
