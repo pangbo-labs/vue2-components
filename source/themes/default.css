@@ -1,0 +1,85 @@
+/*
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+Repository location: https://github.com/pangbo-labs/vue2-components
+*/
+
+
+:root {
+    --font-family: Segoe UI, Rototo, Avenir, Helvetica, Arial, Noto Sans SC, Microsoft Yahei, sans-serif;
+	--font-weight: normal;
+    --text-size: 13px;
+    --line-height: 175%;
+    --line-height-compact: 140%;
+    --text-color: #444;
+    --small-text-size: 12px;
+
+    --primary-color: #c33;
+    /* --secondary-color: #fa3; */
+    --secondary-color: #69c;
+
+    --selected-background-color: #ddd; /* rgba( 0, 0, 0, 0.3 ) */;
+    --selected-text-color: var(--text-color);
+    --selected-text-weight: normal;
+    --hovered-background-color: rgba( 0, 0, 0, 0.1 );
+    --hovered-text-color: var(--text-color); /* #66b1ff; */
+    --hovered-text-weight: normal;
+
+    --popup-menu-background: #fff;
+    --popup-menu-padding: 4px 4px;
+    --popup-menu-item-padding: 8px 20px;
+    --popup-menu-item-line-height: 100%;
+    --popup-menu-item-background: transparent;
+    --popup-menu-item-text-color: var(--text-color);
+    --popup-menu-item-text-size: var(--text-size);
+    --popup-menu-default-item-text-color: var(--popup-menu-item-text-color);
+    --popup-menu-default-item-text-weight: bold;
+
+    --list-view-header-font-size: var(--text-size);
+    --list-view-header-font-weight: 500;
+    --list-view-data-font-size: var(--text-size);
+
+	--tooltip-background: #555;
+	--tooltip-text-size: 12px;
+	--tooltip-text-color: #fff;
+	--tooltip-line-height: 150%;
+	--tooltip-padding: 8px 12px;
+	--tooltip-border-radius: 6px;
+
+
+
+    --PbTable-table-border: 1px solid #eee;
+    --PbTable-table-borderRadius: 5px;
+	--PbTable-table-background: transparent;
+	--PbTable-headerRow-virticalAlign: center;
+	--PbTable-headerRow-background: #f7f6f3;
+    --PbTable-headerRow-color: #37352f;
+	--PbTable-headerRow-lineHeight: 140%;
+	--PbTable-headerRow-borderBottom: 1px solid #eee;
+	--PbTable-dataRow-virticalAlign: center;
+	--PbTable-dataRow-background: #fff;
+	--PbTable-dataRow-color: #37352f;
+	--PbTable-dataRow-lineHeight: 140%;
+	--PbTable-dataRow-borderBottom: 1px solid #eee;
+	--PbTable-dataRow-hover-background: #f9f9f9;
+	--PbTable-dataRow-selected-background: #eeeef9;
+}
+
+body, div, th, td, p, li, dt, dd, input, textarea {
+	font-family: Segoe UI, Rototo, Avenir, Helvetica, Arial, Noto Sans SC, Microsoft Yahei, sans-serif;
+	font-size: 13px;
+	color: #333;
+}
+
+.item-active {
+	background: #c33;
+	color: #333;
+}
+
+.item-hover {
+	background: rgba( 0, 0, 0, 0.08 );
+	color: #333;
+}
+

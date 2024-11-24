@@ -7,9 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@pangbo-labs/pblabs-ui-vue2": "file:../source",
     "core-js": "^3.6.5",
     "highlight.js": "^11.10.0",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.28.2",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },

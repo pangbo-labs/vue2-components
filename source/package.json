@@ -1,0 +1,26 @@
+{
+	"name": "@pangbo-labs/pblabs-ui-vue2",
+	"version": "0.1.0",
+	"main": "dist/index.umd.js",
+	"keywords": [],
+	"author": "pangbo-labs",
+	"license": "ISC",
+	"description": "",
+	"scripts": {
+		"build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build --target lib --filename index src/index.js"
+	},
+	"dependencies": {
+		"core-js": "^3.6.5",
+		"highlight.js": "^11.10.0",
+		"vue": "^2.6.11",
+		"vue-i18n": "^8.28.2",
+		"vue-router": "^3.2.0"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "~4.5.17",
+		"@vue/cli-plugin-router": "~4.5.17",
+		"@vue/cli-plugin-vuex": "~4.5.17",
+		"@vue/cli-service": "~4.5.17",
+		"vue-template-compiler": "^2.6.11"
+	}
+}
