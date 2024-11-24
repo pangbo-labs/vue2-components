@@ -2,7 +2,7 @@
 
 ## Introduction
 
-When I was working on Vue projects, I found the Vue doesn't contain common used components or controls. Vue is just an infrastructure for developing browser-based UI, but to use it to develop an application, you still need many works to create components for your business, and many or these components are common used in almost all projects.
+Vue is just an infrastructure for developing browser-based UI, but when using it to develop applications, you still need many works to create components to statisfy your business requirements, and many or these components are commonly used in almost all projects.
 
 There are many existing third-party component libraries, and the most used one is the Element UI. But, after using it for years, I found it's difficult to use in some cases. I had to write some code to enhance it, or even had to write some my own components to use instead.
 
