@@ -172,7 +172,7 @@ export default {
 
 .navi-item-current, .navi-item-current:hover {
 	background: var(--primary-color);
-	color: var(--selected-text-color);
+	color: #fff; /* var(--selected-text-color) */;
 	font-weight: var(--selected-text-weight);
 	transition: all .3s;
 }

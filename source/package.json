@@ -1,5 +1,5 @@
 {
-	"name": "@pangbo-labs/pblabs-ui-vue2",
+	"name": "@pangbolabs/pblabs-ui-vue2",
 	"version": "0.1.0",
 	"main": "dist/index.umd.js",
 	"keywords": [],
