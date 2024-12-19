@@ -9,11 +9,12 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-//import PbComponents from './components/pblabs-components/index.js'
-//import "./components/pblabs-components/Themes/default.css"
-import PbComponents from '@pangbolabs/pblabs-ui-vue2'
-import "@pangbolabs/pblabs-ui-vue2/themes/default.css"
-import "@pangbolabs/pblabs-ui-vue2/dist/index.css"
+import PbComponents from './components/pblabs-ui-vue2/src'
+import "./components/pblabs-ui-vue2/themes/default.css"
+
+// import PbComponents from '@pangbolabs/pblabs-ui-vue2'
+// import "@pangbolabs/pblabs-ui-vue2/themes/default.css"
+// import "@pangbolabs/pblabs-ui-vue2/dist/index.css"
 import "./assets/google-icon-fonts.css"
 Vue.use( PbComponents );
 

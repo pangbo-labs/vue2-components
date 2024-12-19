@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import DocHome from '../views/docs/DocHome.vue'
 import PbButtonDoc from '../views/docs/docs/PbButtonDoc.vue'
 import PbTableDoc from '../views/docs/docs/PbTableDoc.vue'
+import PbPagingBarDoc from '../views/docs/docs/PbPagingBarDoc.vue'
 import PbTreeDoc from '../views/docs/docs/PbTreeDoc.vue'
 import PbFormDoc from '../views/docs/docs/PbFormDoc.vue'
 import PbListDoc from '../views/docs/docs/PbListDoc.vue'
@@ -32,6 +33,11 @@ const routes = [
 				path: 'pb-table',
 				name: 'PbTableDoc',
 				component: PbTableDoc
+			},
+			{
+				path: 'pb-paging-bar',
+				name: 'PbPagingBarDoc',
+				component: PbPagingBarDoc
 			},
 			{
 				path: 'pb-tree',

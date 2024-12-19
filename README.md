@@ -8,7 +8,7 @@ There are many existing third-party component libraries, and the most used one i
 
 Finally, I decide to make my own component library to hold these new components, or write my own version of all common used ones, after all, most of them are quite simple.
 
-## How To Using
+## How To Use
 
 Because this components library is under developing, most of the code or components are in the early stage, and are far from mature and stable. So, the best way to use this is integrating this into your project by put all the source codes into your project, therefore, once you encountered issues, you can update the source code directly to fix or enhance it.
 
@@ -22,7 +22,7 @@ Run following command in the root directory of your project:
 npm install @pangbolabs/pblabs-ui-vue2 -S
 ```
 
-Then add following lines into you main.js before the code for creating the Vue instance:
+Then add following lines into you `<project-root>/src/main.js` before the code for creating the Vue instance:
 
 ```javascript
 import PbLabsUI from '@pangbolabs/pblabs-ui-vue2'

@@ -70,6 +70,10 @@ export default {
 								routePath: "pb-table"
 							},
 							{
+								text: "Paging Bar",
+								routePath: "pb-paging-bar"
+							},
+							{
 								text: "Tree",
 								routePath: "pb-tree"
 							},
