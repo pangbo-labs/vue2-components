@@ -6,6 +6,13 @@ file, You can obtain one at https://mozilla.org/MPL/2.0/.
 Repository location: https://github.com/pangbo-labs/vue2-components
 */
 
+/* Source Code Pro */
+/* @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap'); */
+
+/* Roboto Mono */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+
 
 :root {
     --font-family: Segoe UI, Rototo, Avenir, Helvetica, Arial, Noto Sans SC, Microsoft Yahei, sans-serif;
@@ -65,6 +72,37 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 	--PbTable-dataRow-borderBottom: 1px solid #eee;
 	--PbTable-dataRow-hover-background: #f9f9f9;
 	--PbTable-dataRow-selected-background: #eeeef9;
+
+	--pagingBar-button-spacing: 6px;
+	--pagingBar-button-width: 20px;
+	--pagingBar-button-height: 22px;
+	--pagingBar-button-padding: 2px 4px;
+	--pagingBar-button-font-size: 13px;
+	--pagingBar-button-font-weight: normal;
+	--pagingBar-button-border: 1px solid rgba( 0, 0, 0, 0.4 );
+	--pagingBar-button-border-radius: 5px;
+	--pagingBar-button-background: rgba( 255, 255, 255, 1 );
+	--pagingBar-button-text-color: var(--text-color);
+
+	--pagingBar-button-current-page-width: var(--pagingBar-button-width);
+	--pagingBar-button-current-page-height: var(--pagingBar-button-height);
+	--pagingBar-button-current-page-padding: var(--pagingBar-button-padding);
+	--pagingBar-button-current-page-font-size: var(--pagingBar-button-font-size);
+	--pagingBar-button-current-page-font-weight: 600;
+	--pagingBar-button-current-page-border: 1px solid var(--primary-color);
+	--pagingBar-button-current-page-border-radius: var(--pagingBar-button-border-radius);
+	--pagingBar-button-current-page-background: var(--primary-color);
+	--pagingBar-button-current-page-text-color: #fff;
+
+	--codeBlock-border: 1px solid transparent;
+	--codeBlock-border-radius: 5px;
+	--codeBlock-padding: 20px 24px;
+	--codeBlock-background: rgb(243, 245, 247);
+	--codeBlock-font-family: "Roboto Mono", "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
+	--codeBlock-text-size: var(--text-size);
+	--codeBlock-text-weight: 400;
+	--codeBlock-line-height: 150%;
+	--codeBlock-tab-size: 4;
 }
 
 body, div, th, td, p, li, dt, dd, input, textarea {
@@ -83,3 +121,25 @@ body, div, th, td, p, li, dt, dd, input, textarea {
 	color: #333;
 }
 
+::-webkit-scrollbar {
+	width: 7px;
+	height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 1em;
+	background: rgba( 50, 50, 50, 0.3 );
+}
+
+::-webkit-scrollbar-track {
+	border-radius: 1em;
+	background: rgba( 50, 50, 50, 0.1 );
+}
+
+.pb-document, .pb-doc-block {
+	color: var(--text-color);
+}
+
+.pb-document .pb-doc-block {
+	margin-top: 32px;
+}

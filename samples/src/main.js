@@ -35,8 +35,24 @@ Vue.prototype.$code = function( code, language )
 	// return hljs.highlight( code, { language: language } ).value;
 }
 
+Vue.directive( "raw", {
+	bind: function( el, binding, vnode )
+	{
+		console.log( `bind( ${el}, ${binding}, ${vnode} )` );
+		console.log( el );
+		console.log( vnode );
+	},
+	inserted: function( el, binding, vnode )
+	{
+		console.log( `inserted( ${el}, ${binding}, ${vnode} )` );
+		console.log( el );
+		console.log( vnode );
+	}
+} );
+
 new Vue({
 	router,
 	store,
 	render: h => h(App)
 }).$mount('#app')
+

@@ -37,6 +37,7 @@ import PbMarkdown from './PbMarkdown/PbMarkdown.vue'
 import PbList from './PbList/PbList.vue'
 import PbImage from './PbImage/PbImage.vue'
 import PbPagingBar from './PbPagingBar/PbPagingBar.vue'
+import PbCodeBlock from './PbCodeBlock/PbCodeBlock.vue'
 
 import MessageBox from "./MessageBox.js"
 
@@ -68,6 +69,7 @@ const components = [
 	PbList,
 	PbImage,
 	PbPagingBar,
+	PbCodeBlock,
 ];
 
 const PbComponentStyles = {

@@ -7,52 +7,65 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 -->
 
 <template>
-    <div class="pb-table">
-        <div ref="tableHead" class="pb-table-header-row">
-			<div v-if="tableConfig.showRowCheckBox" class="pb-table-header-cell" style="flex: 0; width: 40; justify-content: center;">
-				<i v-if="areAllSelected" ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box" @click="toggleSelectAll()">check_box</i>
-				<i v-else ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box" @click="toggleSelectAll()">check_box_outline_blank</i>
-				<!-- <input ref="selectAllCheckBox" type="checkbox" @click="toggleSelectAll()"> -->
-            </div>
-			<div class="pb-table-header-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
-                :style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'justify-content': column.align }"
-				@click="onColumnHeaderClicked( column )">
-				<pb-stack style="width: fit-content;">
-					<pb-stack-item :size="0" :style="{ 'text-align': column.align }">
-						<slot :name="'column_header_' + column.id" :col="column">{{ column.headerTextId ? $t( column.headerTextId ) : column.headerText }}</slot>
-					</pb-stack-item>
-					<pb-stack-item :size="0" v-if="sorting.column == column.id">
-						<i v-if="(sorting.column == column.id) && (sorting.direction == 1)" class="material-symbols material-symbols-rounded sorting-icon">arrow_upward</i>
-						<i v-if="(sorting.column == column.id) && (sorting.direction == -1)" class="material-symbols material-symbols-rounded sorting-icon">arrow_downward</i>
-					</pb-stack-item>
-				</pb-stack>
-            </div>
-        </div>
-        <div ref="tableBody" class="pb-table-body" @scroll="onScroll">
-			<div v-if="showMessage" class="pb-table-message" v-html="message"></div>
-			<div v-else>
-				<div v-for="(row, rowIndex) in tableConfig.data" :key="rowIndex">
-					<div v-if="!tableConfig.filterMethord || tableConfig.filterMethord( row )" class="pb-table-data-row" :ref="makeRowRef( rowIndex )"
-						:class="{ 'pb-table-data-row-selected': selectedRows.has( row ) }"
-						@mousedown="onRowMouseDown( rowIndex, row, $event )"
-						@click="$emit( 'row-clicked', row )"
-						@dblclick="$emit( 'row-double-clicked', row )"
-						@contextmenu="onTableRowRightClicked( row, $event )">
-						<div v-if="tableConfig.showRowCheckBox" class="pb-table-header-cell" style="flex: 0; width: 40; justify-content: center;">
-							<i v-if="selectedRows.has( row )" ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box</i>
-							<i v-else ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box_outline_blank</i>
-							<!-- <input type="checkbox" :checked="selectedRows.has( row )" @change="onRowCheckBoxClicked( row, $event )"> -->
-						</div>
-						<div class="pb-table-data-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
-							:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align, 'user-select': column.allowSelectContents ? 'auto' : 'none', 'word-break': column.wordBreak ? column.wordBreak : ''  }"
-							@click="$emit( 'data-cell-clicked', row, column )">
-							<slot :name="'column_data_' + column.id" :row="row" :col="column">{{ column.isRowNoColumn ? (rowIndex + 1) : row[column.id] }}</slot>
+    <div class="pb-table pb-doc-block">
+		<div class="pb-table-border">
+			<div ref="tableHead" class="pb-table-header-row">
+				<div v-if="tableConfig.showRowCheckBox" class="pb-table-header-cell" style="flex: 0; width: 40; justify-content: center;">
+					<i v-if="areAllSelected" ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box" @click="toggleSelectAll()">check_box</i>
+					<i v-else ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box" @click="toggleSelectAll()">check_box_outline_blank</i>
+					<!-- <input ref="selectAllCheckBox" type="checkbox" @click="toggleSelectAll()"> -->
+				</div>
+				<div class="pb-table-header-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
+					:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'justify-content': column.align }"
+					@click="onColumnHeaderClicked( column )">
+					<pb-stack style="width: fit-content;">
+						<pb-stack-item :size="0" :style="{ 'text-align': column.align }">
+							<slot :name="'column_header_' + column.id" :col="column">{{ column.headerTextId ? $t( column.headerTextId ) : column.headerText }}</slot>
+						</pb-stack-item>
+						<pb-stack-item :size="0" v-if="sorting.column == column.id">
+							<i v-if="(sorting.column == column.id) && (sorting.direction == 1)" class="material-symbols material-symbols-rounded sorting-icon">arrow_upward</i>
+							<i v-if="(sorting.column == column.id) && (sorting.direction == -1)" class="material-symbols material-symbols-rounded sorting-icon">arrow_downward</i>
+						</pb-stack-item>
+					</pb-stack>
+				</div>
+			</div>
+			<div ref="tableBody" class="pb-table-body" @scroll="onScroll">
+				<div v-if="showMessage" class="pb-table-message" v-html="message"></div>
+				<div v-else>
+					<div v-for="(row, rowIndex) in tableConfig.data" :key="rowIndex">
+						<div v-if="!tableConfig.filterMethord || tableConfig.filterMethord( row )" class="pb-table-data-row" :ref="makeRowRef( rowIndex )"
+							:class="{ 'pb-table-data-row-selected': selectedRows.has( row ) }"
+							@mousedown="onRowMouseDown( rowIndex, row, $event )"
+							@click="$emit( 'row-clicked', row )"
+							@dblclick="$emit( 'row-double-clicked', row )"
+							@contextmenu="onTableRowRightClicked( row, $event )">
+							<div v-if="tableConfig.showRowCheckBox" class="pb-table-header-cell" style="flex: 0; width: 40; justify-content: center;">
+								<i v-if="selectedRows.has( row )" ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box</i>
+								<i v-else ref="selectAllCheckBox" class="material-symbols material-symbols-rounded pb-table-row-check-box">check_box_outline_blank</i>
+								<!-- <input type="checkbox" :checked="selectedRows.has( row )" @change="onRowCheckBoxClicked( row, $event )"> -->
+							</div>
+							<div class="pb-table-data-cell" v-for="(column, columnIndex) in tableConfig.columns" :key="columnIndex"
+								:style="{ 'flex': (column.width > 0) ?  ('0 0 ' + column.width + 'px') : '1 1 0', 'text-align': column.align, 'user-select': column.allowSelectContents ? 'auto' : 'none', 'word-break': column.wordBreak ? column.wordBreak : ''  }"
+								@click="$emit( 'data-cell-clicked', row, column )">
+								<slot :name="'column_data_' + column.id" :row="row" :col="column">{{ column.isRowNoColumn ? (rowIndex + 1) : row[column.id] }}</slot>
+							</div>
 						</div>
 					</div>
+					<div v-if="isLoadingData" class="pb-table-message">Loading...</div>
 				</div>
-				<div v-if="isLoadingData" class="pb-table-message">Loading...</div>
 			</div>
-        </div>
+		</div>
+
+		<div ref="tableFooter" v-if="tableConfig.showSummary || tableConfig.showPagingBar" class="pb-table-footer">
+			<pb-stack :item-spacing="40" style="width: 100%;">
+				<pb-stack-item>
+					<slot :name="table-summary">Total {{ tableConfig.data.length }} rows</slot>
+				</pb-stack-item>
+				<pb-stack-item :size="0">
+					<pb-paging-bar :total-pages="pageCount" @page-changed="onPageChanged"></pb-paging-bar>
+				</pb-stack-item>
+			</pb-stack>
+		</div>
 
         <pb-context-menu v-if="tableConfig.rowContextMenu" ref="rowContextMenu" :menu-items="tableConfig.rowContextMenu" />
     </div>
@@ -77,6 +90,9 @@ export default {
 			loadingDataContext: null,
 			totalRows: -1,
 			loadedRows: 0,
+			pageIndex: 0,
+			pageSize: 500,
+			pageCount: 1,
 			topRowIndex: 0,
 			topRowYOffset: 0,
 			renderedRows: 0,
@@ -260,6 +276,8 @@ export default {
 			this.loadingDataContext = null;
 			this.totalRows = -1;
 			this.loadedRows = 0;
+			this.pageIndex = 0;
+			this.pageCount = 1;
 			this.tableConfig.data = [];
 			this.loadData();
 		},
@@ -298,6 +316,10 @@ export default {
 
 				this.loadingDataContext = data.loadingDataContext;
 				this.totalRows = data.totalRows;
+
+				this.pageCount = this.totalRows / this.pageSize;
+				this.pageCount = this.totalRows % this.pageSize == 0 ? this.pageCount : this.pageCount + 1;
+				this.pageIndex = Math.min( this.pageIndex, this.pageCount - 1 );
 
 				if (this.tableConfig.data == null)
 					this.tableConfig.data = new Array();
@@ -400,6 +422,12 @@ export default {
 				this.selectedRows.clear();
 			}
 			this.$forceUpdate();
+		},
+
+		onPageChanged: function( pageIndex )
+		{
+			this.pageIndex = pageIndex;
+			this.loadData();
 		}
     }
 }
@@ -408,6 +436,11 @@ export default {
 <style scoped>
 .pb-table {
     display: flex;
+    flex-direction: column;
+}
+
+.pb-table-border {
+	display: flex;
     flex-direction: column;
 
 	border: var(--PbTable-table-border);
@@ -500,5 +533,9 @@ export default {
 
 .pb-table-row-check-box {
 	font-size: 19px;
+}
+
+.pb-table-footer {
+	margin-top: 15px;
 }
 </style>

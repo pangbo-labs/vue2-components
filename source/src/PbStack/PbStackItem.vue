@@ -17,7 +17,7 @@ export default {
 	name: "PbStackItem",
 	props:
 	{
-		size: { type: Number, default: -1 },
+		size: { type: Number, default: -1 }, // > 0: specified size, 0: content size, < 0: auto fill
 		align: { type: String, default: "Left" },
 	},
 	data: function()

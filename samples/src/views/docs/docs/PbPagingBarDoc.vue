@@ -3,21 +3,48 @@
 
 		<pb-tab-bar :tabs="tabs" style="width: 100%;" @active-tab-changed="onActiveTabChanged" />
 
-		<div v-if="currentTabPage == 'overview'">
+		<div v-if="currentTabPage == 'overview'" class="pb-document">
 
-			<pb-paging-bar :total-pages="1" style="margin-top: 30px;"></pb-paging-bar>
+			<div class="pb-doc-block">
+				<pb-paging-bar :total-pages="1" style="margin-top: 32px;"></pb-paging-bar>
+			</div>
 
-			<pb-paging-bar :total-pages="3" style="margin-top: 30px;"></pb-paging-bar>
+			<pb-code-block language="html">
+				<pre><textarea>
+					<pb-paging-bar :total-pages="1"></pb-paging-bar>
+				</textarea></pre>
+			</pb-code-block>
+
+			<div class="pb-doc-block">
+				<pb-paging-bar :total-pages="3" style="margin-top: 32px;"></pb-paging-bar>
+			</div>
 			
-			<pb-paging-bar :total-pages="25" :current-page="9" style="margin-top: 30px;"></pb-paging-bar>
+			<pb-code-block language="html">
+				<pre><textarea>
+					<pb-paging-bar :total-pages="3"></pb-paging-bar>
+				</textarea></pre>
+			</pb-code-block>
+
+			<div class="pb-doc-block">
+				<pb-paging-bar :total-pages="25" :current-page="9"></pb-paging-bar>
+			</div>
 			
+			<pb-code-block language="html">
+				<pre><textarea>
+					<pb-paging-bar :total-pages="25" :current-page="9"></pb-paging-bar>
+				</textarea></pre>
+			</pb-code-block>
+
 		</div>
 
-		<div v-if="currentTabPage == 'properties'">
-			<h2>Basic Properties</h2>
+		<div v-if="currentTabPage == 'properties'" class="pb-document">
+
+			<h2>Properties</h2>
+
 			<pb-table :table-config="propertyTable"></pb-table>
 
-			<h2>Defining Columns</h2>
+			<h2>Events</h2>
+
 			<pb-table :table-config="columnDefinitionTable"></pb-table>
 
 			<h2>Loading Table Data</h2>
@@ -78,33 +105,17 @@ export default {
 				],
 				data: [
 					{
-						name: "columns",
-						type: "Array",
-						description: "The column definitions. See following **Defining Columns** section for details.",
+						name: "total-pages",
+						type: "Number",
+						description: "",
+						defaultValue: "1",
 					},
 					{
-						name: "data",
-						type: "Array",
-						description: "The row data of the table. Each entry is a row in the table. See following **Loading Table Data** section for details.",
-						defaultValue: "null",
-					},
-					{
-						name: "loadDataFunc",
+						name: "current-page",
 						type: "Function",
-						description: "The callback function for loading the table data. See following **Loading Table Data** section for details.",
-						defaultValue: "null",
-					},
-					{
-						name: "initialSorting",
-						type: "Object",
-						description: "The initial sorting options of the table.",
-						defaultValue: "null",
-					},
-					{
-						name: "showRowCheckBox",
-						type: "Boolean",
-						description: "Specify whether show the checkbox for each table row for selection.",
-						defaultValue: "false",
+						description: "The index of the current page. Starts from 0.",
+						availableValues: "[ 0, total-pages - 1 ]",
+						defaultValue: "0",
 					},
 				],
 			},

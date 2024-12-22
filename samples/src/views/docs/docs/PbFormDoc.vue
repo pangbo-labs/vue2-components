@@ -3,8 +3,38 @@
 
 		<pb-tab-bar :tabs="tabs" style="width: 100%;" @active-tab-changed="onActiveTabChanged" />
 
-		<div v-if="currentTabPage == 'overview'">
+		<div v-if="currentTabPage == 'overview'" class="pb-document">
+
 			<pb-form :data="theForm"></pb-form>
+
+			<pb-code-block language="html">
+				<pre><textarea>
+					<pb-form :data="theForm"></pb-form>
+				</textarea></pre>
+			</pb-code-block>
+
+			<pb-code-block language="javascript">
+				<pre><textarea>
+					data: function()
+					{
+						return {
+							theForm: {
+								userName:		{ label: "User name:", value: "", placeholder: "Please input the user name" },
+								password:		{ label: "Password:", type: "Password", value: "", placeholder: "Please input the password" },
+								separator:		{ type: "Separator" },
+								userType:		{ label: "User type:", type: "Select", value: "LocalUser", placeholder: "Please input the user type",
+													options: [
+														{ value: "LocalUser", label: "Local User" },
+														{ value: "DomainUser", label: "Domain User" },
+													] },
+								email:			{ label: "Mail:" },
+								description:	{ label: "Description", type: "TextArea" },
+							},
+						}
+					}
+				</textarea></pre>
+			</pb-code-block>
+
 		</div>
 
 		<div v-if="currentTabPage == 'properties'">

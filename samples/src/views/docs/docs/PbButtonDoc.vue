@@ -3,16 +3,36 @@
 
 		<pb-tab-bar :tabs="tabs" style="width: 100%;" @active-tab-changed="onActiveTabChanged" />
 
-		<div v-if="currentTabPage == 'overview'">
-			<p>
-				<code>&lt;pb-button /&gt;</code><br>
-				<pb-button />
-			</p>
+		<div v-if="currentTabPage == 'overview'" class="pb-document">
 
-			<pb-button>OK</pb-button>
-			<pb-button icon-name="home" icon-type="GoogleSymbol">Home</pb-button>
+			<div class="pb-doc-block">
+				<pb-button />
+			</div>
+
+			<pb-code-block language="html"><pre><textarea>
+				<pb-button />
+			</textarea></pre></pb-code-block>
+
+			<div class="pb-doc-block">
+				<pb-button>OK</pb-button>
+			</div>
+
+			<pb-code-block language="html"><pre><textarea>
+				<pb-button>OK</pb-button>
+			</textarea></pre></pb-code-block>
+
+			<div class="pb-doc-block">
+				<pb-button icon-name="home" icon-type="GoogleSymbol">Home</pb-button>
+			</div>
+
+			<pb-code-block language="html"><pre><textarea>
+				<pb-button icon-name="home" icon-type="GoogleSymbol">Home</pb-button>
+			</textarea></pre></pb-code-block>
+
 			<pb-button icon-name="settings" icon-type="GoogleSymbol">Settings</pb-button>
+
 			<pb-button>Cancel</pb-button>
+			
 		</div>
 
 		<div v-if="currentTabPage == 'properties'">

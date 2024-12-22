@@ -7,7 +7,7 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 -->
 
 <template>
-    <div style="display: flex; flex-direction: row;">
+    <div class="pb-doc-block" style="display: flex; flex-direction: row;">
         <table cellspacing="4" style="flex: 1; width: 0;">
             <tr v-for="(item, itemIndex) in data" :key="itemIndex">
 				<td v-if="item.type == 'Separator'" colspan="3">
