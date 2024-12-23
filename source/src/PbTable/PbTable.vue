@@ -59,10 +59,12 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 		<div ref="tableFooter" v-if="tableConfig.showSummary || tableConfig.showPagingBar" class="pb-table-footer">
 			<pb-stack :item-spacing="40" style="width: 100%;">
 				<pb-stack-item>
-					<slot :name="table-summary">Total {{ tableConfig.data.length }} rows</slot>
+					<div v-if="tableConfig.showSummary" class="table-summary">
+						<slot name="table_summary">Total {{ tableConfig.data ? tableConfig.data.length : 0 }} rows</slot>
+					</div>
 				</pb-stack-item>
 				<pb-stack-item :size="0">
-					<pb-paging-bar :total-pages="pageCount" @page-changed="onPageChanged"></pb-paging-bar>
+					<pb-paging-bar v-if="tableConfig.showPagingBar" :total-pages="pageCount" @page-changed="onPageChanged"></pb-paging-bar>
 				</pb-stack-item>
 			</pb-stack>
 		</div>
@@ -91,13 +93,12 @@ export default {
 			totalRows: -1,
 			loadedRows: 0,
 			pageIndex: 0,
-			pageSize: 500,
+			pageSize: this.tableConfig.pageSize ? this.tableConfig.pageSize : 500,
 			pageCount: 1,
 			topRowIndex: 0,
 			topRowYOffset: 0,
 			renderedRows: 0,
 			renderedHeight: 0,
-			defaultLoadingBatchSize: 50,
 			tableBody: this.$refs.tableBody,
 			sorting: {
 				column: "", // column id
@@ -284,7 +285,7 @@ export default {
 
 		loadData: function()
 		{
-			console.log( `loadData(): totalRows: ${this.totalRows}, loadedRows: ${this.loadedRows}` );
+			console.log( `loadData(): pageIndex: ${this.pageIndex}` );
 
 			if (!this.tableConfig || !this.tableConfig.loadDataFunc)
 				return;
@@ -297,8 +298,9 @@ export default {
 			this.message = "Loading data..."
 			// this.showMessage = true;
 			this.loadingDataToken = Date.now();
-			var loadingBatchSize = this.tableConfig.loadingBatchSize ? this.tableConfig.loadingBatchSize : this.defaultLoadingBatchSize;
-			this.tableConfig.loadDataFunc( this.loadedRows, loadingBatchSize, this.sorting, this.loadingDataContext, this.loadingDataToken, this.loadingDataCallback );
+			this.tableConfig.loadDataFunc(
+				this.pageIndex * this.pageSize, this.pageSize, this.sorting,
+				this.loadingDataContext, this.loadingDataToken, this.loadingDataCallback );
 		},
 
 		loadingDataCallback: function( isSuccessful, data, errorMessage )
@@ -317,8 +319,7 @@ export default {
 				this.loadingDataContext = data.loadingDataContext;
 				this.totalRows = data.totalRows;
 
-				this.pageCount = this.totalRows / this.pageSize;
-				this.pageCount = this.totalRows % this.pageSize == 0 ? this.pageCount : this.pageCount + 1;
+				this.pageCount = Math.ceil( this.totalRows / this.pageSize );
 				this.pageIndex = Math.min( this.pageIndex, this.pageCount - 1 );
 
 				if (this.tableConfig.data == null)
@@ -440,27 +441,29 @@ export default {
 }
 
 .pb-table-border {
+	flex: 1;
+	height: 0;
 	display: flex;
     flex-direction: column;
 
-	border: var(--PbTable-table-border);
-	border-radius: var(--PbTable-table-borderRadius);
-	background: var(--PbTable-table-background);
+	border:			var(--PbTable-table-border);
+	border-radius:	var(--PbTable-table-borderRadius);
+	background:		var(--PbTable-table-background);
 }
 
 .pb-table-header-row {
     display: flex;
     flex-direction: row;
 
-	align-items: var(--PbTable-headerRow-virticalAlign);
-	background: var(--PbTable-headerRow-background);
-	color: var(--PbTable-headerRow-color);
-	line-height: var(--PbTable-headerRow-lineHeight);
-	border: var(--PbTable-headerRow-border);
-	border-left: var(--PbTable-headerRow-border);
-	border-right: var(--PbTable-headerRow-border);
-	border-top: var(--PbTable-headerRow-border);
-	border-bottom: var(--PbTable-headerRow-borderBottom);
+	align-items:	var(--PbTable-headerRow-virticalAlign);
+	background:		var(--PbTable-headerRow-background);
+	color:			var(--PbTable-headerRow-color);
+	line-height:	var(--PbTable-headerRow-lineHeight);
+	border:			var(--PbTable-headerRow-border);
+	border-left:	var(--PbTable-headerRow-border);
+	border-right:	var(--PbTable-headerRow-border);
+	border-top:		var(--PbTable-headerRow-border);
+	border-bottom:	var(--PbTable-headerRow-borderBottom);
 }
 
 .sorting-icon {
@@ -473,24 +476,25 @@ export default {
 .pb-table-body {
 	flex: 1;
 	height: 0;
-	overflow-y: auto;
+	overflow: auto;
 	display: flex;
 	flex-direction: column;
+	border-bottom: 1px solid #eee;
 }
 
 .pb-table-data-row {
     display: flex;
     flex-direction: row;
 
-	align-items: var(--PbTable-dataRow-virticalAlign);
-	background: var(--PbTable-dataRow-background);
-	color: var(--PbTable-dataRow-color);
-	line-height: var(--PbTable-dataRow-lineHeight);
-	border: var(--PbTable-dataRow-border);
-	border-left: var(--PbTable-dataRow-border);
-	border-right: var(--PbTable-dataRow-border);
-	border-top: var(--PbTable-dataRow-border);
-	border-bottom: var(--PbTable-dataRow-borderBottom);
+	align-items:	var(--PbTable-dataRow-virticalAlign);
+	background:		var(--PbTable-dataRow-background);
+	color:			var(--PbTable-dataRow-color);
+	line-height:	var(--PbTable-dataRow-lineHeight);
+	border:			var(--PbTable-dataRow-border);
+	border-left:	var(--PbTable-dataRow-border);
+	border-right:	var(--PbTable-dataRow-border);
+	border-top:		var(--PbTable-dataRow-border);
+	border-bottom:	var(--PbTable-dataRow-borderBottom);
 }
 
 .pb-table-data-row:hover {
@@ -498,8 +502,8 @@ export default {
 }
 
 .pb-table-data-row-selected, .pb-table-data-row-selected:hover {
-    background: var(--PbTable-dataRow-selected-background);
-	color: var(--PbTable-dataRow-selected-color);
+    background:	var(--PbTable-dataRow-selected-background);
+	color:		var(--PbTable-dataRow-selected-color);
 }
 
 .pb-table-header-cell {
@@ -537,5 +541,10 @@ export default {
 
 .pb-table-footer {
 	margin-top: 15px;
+}
+
+.table-summary {
+	color: rgba( 0, 0, 0, 0.4 );
+	font-weight: 600;
 }
 </style>

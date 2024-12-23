@@ -121,7 +121,7 @@ body, div, th, td, p, li, dt, dd, input, textarea {
 	color: #333;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
 	width: 7px;
 	height: 7px;
 }
@@ -134,7 +134,7 @@ body, div, th, td, p, li, dt, dd, input, textarea {
 ::-webkit-scrollbar-track {
 	border-radius: 1em;
 	background: rgba( 50, 50, 50, 0.1 );
-}
+} */
 
 .pb-document, .pb-doc-block {
 	color: var(--text-color);
