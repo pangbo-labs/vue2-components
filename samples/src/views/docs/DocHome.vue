@@ -78,6 +78,10 @@ export default {
 								routePath: "pb-tree"
 							},
 							{
+								text: "Panel",
+								routePath: "pb-panel"
+							},
+							{
 								text: "Tab Bar",
 								routePath: "pb-tab-bar"
 							},
@@ -92,6 +96,10 @@ export default {
 							{
 								text: "Context Menu",
 								routePath: "pb-context-menu"
+							},
+							{
+								text: "Tooltip",
+								routePath: "pb-tooltip"
 							},
 						],
 					},

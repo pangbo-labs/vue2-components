@@ -1,6 +1,6 @@
 {
 	"name": "@pangbolabs/pblabs-ui-vue2",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"main": "dist/index.umd.js",
 	"keywords": [],
 	"author": "pangbo-labs",

@@ -38,6 +38,7 @@ import PbList from './PbList/PbList.vue'
 import PbImage from './PbImage/PbImage.vue'
 import PbPagingBar from './PbPagingBar/PbPagingBar.vue'
 import PbCodeBlock from './PbCodeBlock/PbCodeBlock.vue'
+import PbPanel from './PbPanel/PbPanel.vue'
 
 import MessageBox from "./MessageBox.js"
 
@@ -70,6 +71,7 @@ const components = [
 	PbImage,
 	PbPagingBar,
 	PbCodeBlock,
+	PbPanel,
 ];
 
 const PbComponentStyles = {

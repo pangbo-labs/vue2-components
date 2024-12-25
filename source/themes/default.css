@@ -103,6 +103,20 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 	--codeBlock-text-weight: 400;
 	--codeBlock-line-height: 150%;
 	--codeBlock-tab-size: 4;
+
+	--pb-panel-caption-padding: 6px 12px;
+	--pb-panel-caption-text-size: 16px;
+	--pb-panel-caption-text-weight: 600;
+	--pb-panel-caption-line-height: 150%;
+	--pb-panel-discription-padding: 6px 12px;
+	--pb-panel-discription-text-size: var(--text-size);
+	--pb-panel-discription-text-weight: var(--font-weight);
+	--pb-panel-discription-line-height: 140%;
+	--pb-panel-content-padding: 10px 15px;
+	--pb-panel-footer-padding: 6px 12px;
+	--pb-panel-footer-text-size: var(--text-size);
+	--pb-panel-footer-text-weight: var(--font-weight);
+	--pb-panel-footer-line-height: 140%;
 }
 
 body, div, th, td, p, li, dt, dd, input, textarea {

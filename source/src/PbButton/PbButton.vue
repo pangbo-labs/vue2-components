@@ -8,16 +8,21 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 
 <template>
 	<pb-tooltip-anchor style="display: inline-block;" class="the-component">
-		<button :class="[ customClass ? customClass : 'pb-button', { 'default-button': isDefault, 'disabled-button': isDisabled } ]"
-			:style="{ 'font-size': textSize + 'px' }" @click="onClick">
-			<div v-if="iconName && showIcon" class="button-icon-div">
-				<i v-if="iconType == 'GoogleSymbol'" class="material-symbols material-symbols-rounded button-icon">{{ iconName }}</i>
-				<img v-else-if="iconType == 'ImageFile'" class="button-icon">
-				<div v-else></div>
-			</div>
-			<slot>Button</slot>
-		</button>
-		<pb-tooltip v-if="$slots.tooltip"><slot name="tooltip"></slot></pb-tooltip>
+		<template v-slot:target>
+			<button :class="[ customClass ? customClass : 'pb-button', { 'default-button': isDefault, 'disabled-button': isDisabled } ]"
+				:style="{ 'font-size': textSize + 'px' }" @click="onClick">
+				<div v-if="iconName && showIcon" class="button-icon-div">
+					<i v-if="iconType == 'GoogleSymbol'" class="material-symbols material-symbols-rounded button-icon">{{ iconName }}</i>
+					<img v-else-if="iconType == 'ImageFile'" class="button-icon">
+					<div v-else></div>
+				</div>
+				<slot>Button</slot>
+			</button>
+		</template>
+		<template v-slot:tooltip>
+			<slot name="tooltip"></slot>
+		</template>
+		<!-- <pb-tooltip v-if="$slots.tooltip"><slot name="tooltip"></slot></pb-tooltip> -->
 	</pb-tooltip-anchor>
 </template>
 
