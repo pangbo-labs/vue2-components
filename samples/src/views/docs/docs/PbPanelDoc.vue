@@ -24,7 +24,9 @@
 			<div class="pb-doc-block" style="width: 400px; height: 300px;">
 				<pb-panel caption="Panel" description="Panel description">
 					<template v-slot:content>
-						Just Do It!
+						<div style="width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+							<span style="font-size: 24px; font-weight: 600;">Just Do It!</span>
+						</div>
 					</template>
 				</pb-panel>
 			</div>
@@ -32,7 +34,9 @@
 			<pb-code-block language="html"><pre><textarea>
 				<pb-panel caption="Panel" description="Panel description">
 					<template v-slot:content>
-						Just Do It!
+						<div style="width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: center; align-items: center;">
+							<span style="font-size: 24px; font-weight: 600;">Just Do It!</span>
+						</div>
 					</template>
 				</pb-panel>
 			</textarea></pre></pb-code-block>

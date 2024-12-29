@@ -23,20 +23,24 @@ Repository location: https://github.com/pangbo-labs/vue2-components
 						@change="if (item.onChange) item.onChange( $event );" />
 					<input v-else-if="item.type == 'Password'" :ref="getRefName( itemIndex )"
 						type="password" v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
-						:placeholder="item.placeholder" :required="item.required"
+						:placeholder="item.placeholderId ? $t( item.placeholderId ) : item.placeholder" :required="item.required"
 						@change="if (item.onChange) item.onChange( $event );">
-					<select v-else-if="item.type == 'Select'" v-model="item.value" :placeholder="item.placeholder" class="field field-select"
+					<select v-else-if="item.type == 'Select'" v-model="item.value"
+						:placeholder="item.placeholderId ? $t( item.placeholderId ) : item.placeholder"
+						class="field field-select"
 						@change="if (item.onChange) item.onChange( $event );">
-						<option v-for="(option, optionIndex) in item.options" :key="optionIndex" :value="option.value" :label="option.label" class="field field-option"></option>
+						<option v-for="(option, optionIndex) in item.options" :key="optionIndex"
+							:value="option.value" :label="option.labelId ? $t( option.labelId ) : option.label" class="field field-option">
+						</option>
 					</select>
 					<textarea v-else-if="item.type == 'TextArea'" :ref="getRefName( itemIndex )"
 						v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
-						:placeholder="item.placeholder" :required="item.required" :style="{ 'height': item.height ? item.height : 'auto' }"
+						:placeholder="item.placeholderId ? $t( item.placeholderId ) : item.placeholder" :required="item.required" :style="{ 'height': item.height ? item.height : 'auto' }"
 						@change="if (item.onChange) item.onChange( $event );">
 					</textarea>
 					<input v-else type="text" :ref="getRefName( itemIndex )"
 						v-model="item.value" class="field field-input" :readonly="item.readOnly" :disabled="item.disabled"
-						:placeholder="item.placeholder" :required="item.required"
+						:placeholder="item.placeholderId ? $t( item.placeholderId ) : item.placeholder" :required="item.required"
 						@change="if (item.onChange) item.onChange( $event );">
 				</td>
             </tr>
